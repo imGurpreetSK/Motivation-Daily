@@ -47,6 +47,6 @@ public class GridFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        getAuthorsFromFirebase();
+//        getAuthorsFromFirebase();     //TODO: 1
     }
 }

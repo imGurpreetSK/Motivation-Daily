@@ -37,3 +37,5 @@ dependencies {
     compile 'ckm.simple:simple_sql_provider_processor:1.0.6'
     testCompile 'junit:junit:4.12'
 }
+
+apply plugin: 'com.google.gms.google-services'
