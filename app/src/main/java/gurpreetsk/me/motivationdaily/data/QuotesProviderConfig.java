@@ -15,7 +15,7 @@ import ckm.simple.sql_provider.annotation.SimpleSQLConfig;
         version = 1
 )
 
-public class QuotesProvider implements ProviderConfig {
+public class QuotesProviderConfig implements ProviderConfig {
     @Override
     public UpgradeScript[] getUpdateScripts() {
         return new UpgradeScript[0];

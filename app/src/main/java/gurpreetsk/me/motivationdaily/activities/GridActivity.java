@@ -1,7 +1,9 @@
-package gurpreetsk.me.motivationdaily;
+package gurpreetsk.me.motivationdaily.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import gurpreetsk.me.motivationdaily.R;
 
 public class GridActivity extends AppCompatActivity {
 
