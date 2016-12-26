@@ -42,6 +42,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.TV_quote.setText(quotes.get(position));
+        //TODO: save in DB and create view for viewing bookmarked quotes
         holder.Bookmark_quote.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {

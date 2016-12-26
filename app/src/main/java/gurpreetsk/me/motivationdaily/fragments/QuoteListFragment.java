@@ -41,7 +41,7 @@ public class QuoteListFragment extends Fragment {
         quotes = getArguments().getStringArrayList(Constants.QUOTES_KEY);
         if (quotes != null) {
             Log.i(TAG, "onCreateView: Got " + quotes.size() + " quotes.");
-            Log.i(TAG, "onCreateView: First quote is " + quotes.get(0));
+            Log.i(TAG, "onCreateView: Last quote is " + quotes.get(quotes.size()-1));
         } else
             Log.e(TAG, "onCreateView: QuotesArrayList is null.");
 

@@ -52,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
         editor.commit();
 
         database = FirebaseDatabase.getInstance();
-        database.setPersistenceEnabled(true);
+        database.setPersistenceEnabled(true);   //TODO: Crash here
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.keepSynced(true);
 
@@ -63,14 +63,14 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        isFirstRun = preferences.getBoolean(getString(R.string.isFirstRun), true);
-        if (isFirstRun && !NetworkCheck.isNetworkConnected(this))
+//        isFirstRun = preferences.getBoolean(getString(R.string.isFirstRun), true);
+//        if (isFirstRun && !NetworkCheck.isNetworkConnected(this))
 //            Snackbar.make(findViewById(R.id.activity_splash), getString(R.string.firstRunInternetNeeded), Snackbar.LENGTH_INDEFINITE);
-            Toast.makeText(this, getString(R.string.firstRunInternetNeeded), Toast.LENGTH_SHORT).show();
-        else {
+//            Toast.makeText(this, getString(R.string.firstRunInternetNeeded), Toast.LENGTH_SHORT).show();
+//        else {
             getAuthorsFromFirebase();
-            preferences.edit().putBoolean(getString(R.string.isFirstRun), false).apply();
-        }
+//            preferences.edit().putBoolean(getString(R.string.isFirstRun), false).apply();
+//        }
     }
 
     void getAuthorsFromFirebase() {

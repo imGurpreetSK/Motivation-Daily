@@ -36,7 +36,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
     ArrayList<String> authorList = new ArrayList<>();
     Context context;
 
-
     ArrayList<String> authorQuotes = new ArrayList<>();
     private static final String TAG = "AuthorAdapter";
 
@@ -60,18 +59,19 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 getQuotesFromFirebase(authorList.get(holder.getAdapterPosition()));
+                Log.i(TAG, "onClick: " + holder.getAdapterPosition() + " clicked.");
             }
         });
 
     }
 
-    void getQuotesFromFirebase(String authorName) {
+    void getQuotesFromFirebase(final String authorName) {
         DatabaseReference databaseReference;
 //        FirebaseDatabase database;
 //        database = FirebaseDatabase.getInstance();
 //        database.setPersistenceEnabled(true);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(authorName);
-        databaseReference.keepSynced(true);
+//        databaseReference.keepSynced(true);
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -89,7 +89,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
             }
         };
-        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+        databaseReference.addValueEventListener(valueEventListener);
     }
 
     @Override
