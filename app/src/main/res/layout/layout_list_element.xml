@@ -4,10 +4,10 @@
     android:id="@+id/quote_list_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:layout_marginBottom="@dimen/activity_margin_medium"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="@dimen/activity_margin_medium"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_margin_small"
     android:paddingTop="@dimen/activity_margin_small">
@@ -19,7 +19,8 @@
         android:layout_weight="7"
         android:ellipsize="end"
         android:gravity="center"
-        android:maxLines="1" />
+        android:layout_gravity="center"
+        android:maxLines="2" />
 
     <com.like.LikeButton
         android:id="@+id/quote_list_bookmark_button"
@@ -36,12 +37,5 @@
         app:icon_type="star"
         app:like_drawable="@drawable/ic_bookmarked"
         app:unlike_drawable="@drawable/ic_unbookmarked" />
-    <!--<ImageButton-->
-    <!--android:id="@+id/quote_list_image_button"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_weight="1"-->
-    <!--android:contentDescription="@string/bookmark_image_button"-->
-    <!--android:src="@mipmap/ic_launcher" />-->
 
 </LinearLayout>
