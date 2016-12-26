@@ -75,6 +75,8 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(authorQuotes!=null)
+                    authorQuotes.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren())
                     authorQuotes.add(child.child("Quote").getValue().toString());
 
