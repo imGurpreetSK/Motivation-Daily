@@ -7,5 +7,6 @@ package gurpreetsk.me.motivationdaily.utils;
 public class Constants {
 
     public static final String AUTHORS_KEY = "AuthorsKey";
+    public static final String QUOTES_KEY = "QuotesKey";
 
 }

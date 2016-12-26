@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="grid_imageview_desc">Image of the quote author</string>
     <string name="no_network">No Network available</string>
+    <string name="isFirstRun">FirstRun</string>
+    <string name="firstRunInternetNeeded">Internet connection needed for the app to run for the first time</string>
+    <string name="PREF_FILE">MY PREFERENCES</string>
+    <string name="bookmark_image_button">Image button to bookmark quote</string>
 </resources>

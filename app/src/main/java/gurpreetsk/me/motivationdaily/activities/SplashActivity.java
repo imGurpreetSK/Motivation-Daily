@@ -1,8 +1,10 @@
 package gurpreetsk.me.motivationdaily.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,16 +20,17 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
-import gurpreetsk.me.motivationdaily.fragments.GridFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 import gurpreetsk.me.motivationdaily.utils.NetworkCheck;
 
-import static java.security.AccessController.getContext;
-
 public class SplashActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase database;
+
     ArrayList<String> authorNameList = new ArrayList<>();
+    Boolean isFirstRun;
+    SharedPreferences preferences;
 
     private static final String TAG = "SplashActivity";
 
@@ -42,33 +45,41 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // set first run shared
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(getString(R.string.isFirstRun), true);
+        editor.commit();
+
+        database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.keepSynced(true);
+
+        //TODO: CHECK FOR INTERNET CONNECTIVITY ON FIRST RUN
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (NetworkCheck.isNetworkConnected(this))
-            getAuthorsFromFirebase();     //TODO: 1
-        else
-            Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
+        isFirstRun = preferences.getBoolean(getString(R.string.isFirstRun), true);
+        if (isFirstRun && !NetworkCheck.isNetworkConnected(this))
+//            Snackbar.make(findViewById(R.id.activity_splash), getString(R.string.firstRunInternetNeeded), Snackbar.LENGTH_INDEFINITE);
+            Toast.makeText(this, getString(R.string.firstRunInternetNeeded), Toast.LENGTH_SHORT).show();
+        else {
+            getAuthorsFromFirebase();
+            preferences.edit().putBoolean(getString(R.string.isFirstRun), false).apply();
+        }
     }
 
-    private void getAuthorsFromFirebase() {
+    void getAuthorsFromFirebase() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                for (DataSnapshot child : dataSnapshot.getChildren())
                     authorNameList.add(child.getKey());
-//                    Log.i(TAG, "getAuthorsFromFirebase: added " + child.getKey());
-                }
-//                for (String author : authorNameList) {
-//                    StringBuilder sb = new StringBuilder();
-//                    sb.append(author);
-//                    authors += sb.toString() + "\n";
-//                }
-//                TV_authorNames.setText(authors);
+
                 Intent sendAuthorsList = new Intent(SplashActivity.this, GridActivity.class);
                 sendAuthorsList.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
                 startActivity(sendAuthorsList);
@@ -80,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
             }
         };
-        mDatabase.addValueEventListener(valueEventListener);
+        databaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
     @Override

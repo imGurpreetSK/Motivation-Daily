@@ -35,7 +35,7 @@ public class GridFragment extends Fragment {
 
     private static final String TAG = "GridFragment";
     ArrayList<String> authorNameList = new ArrayList<>();
-    public static final int NO_OF_COLUMNS = 2;
+    public static final int NO_OF_COLUMNS = 3;
 
 
     public GridFragment() {}
@@ -49,13 +49,14 @@ public class GridFragment extends Fragment {
         authorNameList = getArguments().getStringArrayList(Constants.AUTHORS_KEY);
         ButterKnife.bind(this, v);
 
-        if (NetworkCheck.isNetworkConnected(getContext())) {
-            AuthorAdapter gridAdapter = new AuthorAdapter(getContext(), authorNameList);
-            RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NO_OF_COLUMNS);
-            recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setAdapter(gridAdapter);
-        } else
-            Toast.makeText(getContext(), R.string.no_network, Toast.LENGTH_SHORT).show();
+        if (!NetworkCheck.isNetworkConnected(getContext())) {
+
+        }
+
+        AuthorAdapter gridAdapter = new AuthorAdapter(getContext(), authorNameList);
+        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NO_OF_COLUMNS);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(gridAdapter);
 
         return v;
     }
