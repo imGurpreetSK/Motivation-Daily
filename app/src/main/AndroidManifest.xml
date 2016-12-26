@@ -11,18 +11,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.GridActivity">
+        </activity>
+
+        <provider
+            android:name=".data.QuotesProvider"
+            android:authorities="authority:gurpreetsk.me.motivationdaily"
+            android:exported="false" />
+
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <provider
-            android:authorities="authority:gurpreetsk.me.motivationdaily"
-            android:name=".data.QuotesProvider"
-            android:exported="false"/>
     </application>
 
 </manifest>

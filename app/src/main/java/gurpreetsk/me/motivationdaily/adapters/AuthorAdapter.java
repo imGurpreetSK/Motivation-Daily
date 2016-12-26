@@ -37,6 +37,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         //TODO: 2
+        holder.TV_authorName.setText(authorList.get(position));
     }
 
     @Override
