@@ -20,12 +20,23 @@
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.QuoteListActivity" />
-        <activity android:name=".activities.QuoteViewActivity" />
+        <activity
+            android:name=".activities.QuoteListActivity"
+            android:parentActivityName=".activities.GridActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.GridActivity" />
+        </activity>
+        <activity
+            android:name=".activities.QuoteViewActivity"
+            android:parentActivityName=".activities.QuoteListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.QuoteListActivity" />
+        </activity>
     </application>
 
 </manifest>

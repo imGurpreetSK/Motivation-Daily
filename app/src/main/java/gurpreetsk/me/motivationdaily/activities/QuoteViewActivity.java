@@ -4,6 +4,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -23,7 +24,8 @@ public class QuoteViewActivity extends AppCompatActivity {
 
     @BindView(R.id.quotePager)
     ViewPager quotePager;
-    private PagerAdapter pagerAdapter;
+    @BindView(R.id.my_toolbar)
+    Toolbar toolbar;
 
     ArrayList<String> quotes;
     int quoteNumber;
@@ -32,18 +34,15 @@ public class QuoteViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_view);
-        try {
-            getSupportActionBar().hide();
-        } catch (Exception e) {
-            e.printStackTrace();
-            FirebaseCrash.report(e);
-        }
         ButterKnife.bind(this);
-
+        setSupportActionBar(toolbar);
+        //TODO:NPE because of this
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
         quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
 
-        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
+        PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
         quotePager.setAdapter(pagerAdapter);
         quotePager.setPageTransformer(true, new DepthPageTransformer());
         quotePager.setCurrentItem(quoteNumber);
