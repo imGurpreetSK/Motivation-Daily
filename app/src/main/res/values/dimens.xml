@@ -5,4 +5,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="activity_margin_medium">8dp</dimen>
+    <dimen name="quote_text_size">18sp</dimen>
+    <dimen name="pager_card_corner_radius">10dp</dimen>
 </resources>

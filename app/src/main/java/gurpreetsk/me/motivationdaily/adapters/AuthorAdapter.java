@@ -62,16 +62,17 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 Log.i(TAG, "onClick: " + holder.getAdapterPosition() + " clicked.");
             }
         });
-
     }
+
+//    @Override
+//    public int getItemViewType(int position) {
+//        super.getItemViewType(position);
+//        //TODO: make first card big, denote it with quote of the day
+//    }
 
     private void getQuotesFromFirebase(final String authorName) {
         DatabaseReference databaseReference;
-//        FirebaseDatabase database;
-//        database = FirebaseDatabase.getInstance();
-//        database.setPersistenceEnabled(true);
         databaseReference = FirebaseDatabase.getInstance().getReference().child(authorName);
-//        databaseReference.keepSynced(true);
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,6 +83,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
                 Intent sendAuthorsList = new Intent(context, QuoteListActivity.class);
                 sendAuthorsList.putStringArrayListExtra(Constants.QUOTES_KEY, authorQuotes);
+                sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
                 context.startActivity(sendAuthorsList);
                 Log.i(TAG, "onDataChange: Got author quotes, Started QuoteListActivity");
             }

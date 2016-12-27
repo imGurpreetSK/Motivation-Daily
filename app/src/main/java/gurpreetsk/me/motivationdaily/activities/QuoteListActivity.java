@@ -13,6 +13,7 @@ public class QuoteListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_list);
+        setTitle(getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY));
 
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
