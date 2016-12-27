@@ -1,8 +1,13 @@
 package gurpreetsk.me.motivationdaily.adapters;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.activities.QuoteViewActivity;
+import gurpreetsk.me.motivationdaily.data.Database;
+import gurpreetsk.me.motivationdaily.data.QuotesTable;
+import gurpreetsk.me.motivationdaily.data.TableStructure;
+import gurpreetsk.me.motivationdaily.models.Quote;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
@@ -29,11 +40,15 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
 
     private ArrayList<String> quotes;
     private Context context;
+    private String author;
+
+    private static final String TAG = "QuoteAdapter";
 
 
-    public QuoteAdapter(Context context, ArrayList<String> quotes) {
+    public QuoteAdapter(Context context, ArrayList<String> quotes, String author) {
         this.quotes = quotes;
         this.context = context;
+        this.author = author;
     }
 
     @Override
@@ -46,15 +61,35 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.TV_quote.setText(quotes.get(position));
         //TODO: save in DB and create view for viewing bookmarked quotes
+        ArrayList<String> idList = queryFavourites();
+        if (idList.contains(quotes.get(holder.getAdapterPosition())))
+            holder.Bookmark_quote.setLiked(true);
+
         holder.Bookmark_quote.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                likeButton.setLiked(true);
+                Database databaseInstance = new Database();
+                databaseInstance.authorName = author;
+                databaseInstance.quote = quotes.get(holder.getAdapterPosition());
+                try {
+                    context.getContentResolver().insert(QuotesTable.CONTENT_URI, QuotesTable.getContentValues(databaseInstance, false));
+                    likeButton.setLiked(true);
+                    Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.e(TAG, "liked: ", e);
+//                    FirebaseCrash.log("Couldn't insert in database");
+                }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                likeButton.setLiked(false);
+                try {
+                    context.getContentResolver().delete(QuotesTable.CONTENT_URI, TableStructure.COLUMN_QUOTE + " = ?", new String[]{quotes.get(holder.getAdapterPosition())});
+                    likeButton.setLiked(false);
+                    Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.e(TAG, "unLiked: ", e);
+                }
             }
         });
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +107,16 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
 //    public int getItemViewType(int position) {
 //        return (position==0?);
 //    }
+
+    private ArrayList<String> queryFavourites() {
+        Cursor c = context.getContentResolver().query(QuotesTable.CONTENT_URI, null, null, null, null);
+        List<Database> list = QuotesTable.getRows(c, true);     // all rows of database
+        ArrayList<String> idList = new ArrayList<>();
+        for (Database element : list) {
+            idList.add(element.quote);      // add all quotes in arraylist and return
+        }
+        return idList;
+    }
 
     @Override
     public int getItemCount() {

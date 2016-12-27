@@ -12,11 +12,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.GridActivity" />
 
-        <provider
-            android:name=".data.QuotesProvider"
-            android:authorities="authority:gurpreetsk.me.motivationdaily"
-            android:exported="false" />
-
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +32,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.QuoteListActivity" />
         </activity>
+
+        <provider
+            android:name=".data.QuotesProvider"
+            android:authorities="gurpreetsk.me.motivationdaily"
+            android:exported="false" />
+
     </application>
 
 </manifest>

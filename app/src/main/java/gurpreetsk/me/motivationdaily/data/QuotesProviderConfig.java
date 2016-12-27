@@ -10,12 +10,13 @@ import ckm.simple.sql_provider.annotation.SimpleSQLConfig;
 
 @SimpleSQLConfig(
         name = "QuotesProvider",
-        authority = "authority:gurpreetsk.me.motivationdaily",
+        authority = "gurpreetsk.me.motivationdaily",
         database = "quotes.db",
         version = 1
 )
 
 public class QuotesProviderConfig implements ProviderConfig {
+
     @Override
     public UpgradeScript[] getUpdateScripts() {
         return new UpgradeScript[0];

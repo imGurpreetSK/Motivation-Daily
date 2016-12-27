@@ -26,6 +26,7 @@ public class QuoteListFragment extends Fragment {
     RecyclerView recyclerView;
 
     ArrayList<String> quotes = new ArrayList<>();
+    String authorName;
     private static final String TAG = "QuoteListFragment";
 
 
@@ -40,13 +41,14 @@ public class QuoteListFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         quotes = getArguments().getStringArrayList(Constants.QUOTES_KEY);
+        authorName = getArguments().getString(Constants.AUTHOR_NAME_KEY);
         if (quotes != null) {
             Log.i(TAG, "onCreateView: Got " + quotes.size() + " quotes.");
             Log.i(TAG, "onCreateView: Last quote is " + quotes.get(quotes.size()-1));
         } else
             Log.e(TAG, "onCreateView: QuotesArrayList is null.");
 
-        QuoteAdapter quoteAdapter = new QuoteAdapter(getContext(), quotes);
+        QuoteAdapter quoteAdapter = new QuoteAdapter(getContext(), quotes, authorName);
         recyclerView.setAdapter(quoteAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

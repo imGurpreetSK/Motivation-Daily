@@ -9,4 +9,5 @@
     <string name="firstRunInternetNeeded">Internet connection needed for the app to run for the first time</string>
     <string name="PREF_FILE">MY PREFERENCES</string>
     <string name="bookmark_image_button">Image button to bookmark quote</string>
+    <string name="ic_settings">Settings</string>
 </resources>

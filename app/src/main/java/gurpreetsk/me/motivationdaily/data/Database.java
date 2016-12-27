@@ -8,14 +8,14 @@ import ckm.simple.sql_provider.annotation.SimpleSQLTable;
  */
 
 @SimpleSQLTable(
-        table = "QuotesTable",
+        table = "Quotes",
         provider = "QuotesProvider"
 )
 
 public class Database {
 
-    @SimpleSQLColumn(value = TableStructure.COLUMN_ID, primary = true)
-    public String id;
+    @SimpleSQLColumn(value = TableStructure.COLUMN_ID, primary = true, autoincrement = true)
+    public int id;
 
     @SimpleSQLColumn(value = TableStructure.COLUMN_AUTHOR)
     public String authorName;
