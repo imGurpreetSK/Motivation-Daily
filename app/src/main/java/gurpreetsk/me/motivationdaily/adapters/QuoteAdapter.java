@@ -76,8 +76,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
                     likeButton.setLiked(true);
                     Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Log.e(TAG, "liked: ", e);
-//                    FirebaseCrash.log("Couldn't insert in database");
+//                    Log.e(TAG, "liked: ", e);
+                    FirebaseCrash.log("Couldn't insert in database");
                 }
             }
 
@@ -89,6 +89,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
                     Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Log.e(TAG, "unLiked: ", e);
+                    FirebaseCrash.log("Couldn't delete from database");
                 }
             }
         });

@@ -31,9 +31,11 @@
             android:paddingRight="@dimen/activity_margin_medium"
             android:layout_gravity="bottom"
             android:gravity="center"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:maxLines="2"
-            android:textColor="@android:color/black"
+            android:textSize="@dimen/authorname_text_size"
+            android:textColor="@android:color/white"
             android:minHeight="60dp" />
 
     </LinearLayout>

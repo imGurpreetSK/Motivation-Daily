@@ -7,4 +7,5 @@
     <dimen name="activity_margin_medium">8dp</dimen>
     <dimen name="quote_text_size">18sp</dimen>
     <dimen name="pager_card_corner_radius">10dp</dimen>
+    <dimen name="authorname_text_size">16sp</dimen>
 </resources>

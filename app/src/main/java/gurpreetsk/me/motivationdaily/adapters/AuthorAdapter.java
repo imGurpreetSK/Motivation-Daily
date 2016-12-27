@@ -2,6 +2,8 @@ package gurpreetsk.me.motivationdaily.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,19 +61,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         //TODO: Set image url
         holder.TV_authorName.setText(authorList.get(position));
-        Glide.with(context)
-                .load(AuthorImageUrl.getAuthorImage(authorList.get(position)))
-                .into(holder.IV_authorImage);
-//        InputStream is;
-//        Bitmap myBitmap = null;
-//        try {
-//            is = context.getContentResolver().openInputStream(Uri.parse(AuthorImageUrl.getAuthorImage(authorList.get(position))));
-//            myBitmap = BitmapFactory.decodeStream(is);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        int color = getColorPalette(myBitmap);
-//        holder.TV_authorName.setBackgroundResource(color);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +68,31 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 getQuotesFromFirebase(authorList.get(holder.getAdapterPosition()));
             }
         });
-    }
 
-//    private int getColorPalette(Bitmap myBitmap) {
-//        if (myBitmap != null && !myBitmap.isRecycled())
-//            return Palette.from(myBitmap).generate().getLightVibrantColor(context.getResources().getColor(R.color.colorAccent));
-//        return context.getResources().getColor(R.color.colorAccent);
-//    }
+        Glide.with(context)
+                .load(AuthorImageUrl.getAuthorImage(authorList.get(position)))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model,
+                                                   Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
+                        Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
+                        Palette palette = Palette.generate(bitmap);
+                        int defaultColor = 0xFF333333;
+                        int color = palette.getMutedColor(defaultColor);
+                        holder.TV_authorName.setBackgroundColor(color);
+                        return false;
+                    }
+                })
+                .into(holder.IV_authorImage);
+    }
 
 //    @Override
 //    public int getItemViewType(int position) {
