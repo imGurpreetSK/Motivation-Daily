@@ -61,7 +61,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, QuoteViewActivity.class);
-                intent.putExtra(Constants.QUOTE_KEY, quotes.get(holder.getAdapterPosition()));
+                intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
+                intent.putExtra(Constants.QUOTE_NUMBER_KEY, holder.getAdapterPosition());
                 context.startActivity(intent);
             }
         });
