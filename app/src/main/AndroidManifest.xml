@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.QuoteListActivity" />
-        <activity android:name=".activities.QuoteViewActivity"></activity>
+        <activity android:name=".activities.QuoteViewActivity" />
     </application>
 
 </manifest>
