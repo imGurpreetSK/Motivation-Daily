@@ -1,6 +1,7 @@
 package gurpreetsk.me.motivationdaily.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.activities.QuoteViewActivity;
+import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
  * Created by Gurpreet on 26/12/16.
@@ -25,7 +28,7 @@ import gurpreetsk.me.motivationdaily.R;
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder> {
 
     private ArrayList<String> quotes;
-    Context context;
+    private Context context;
 
 
     public QuoteAdapter(Context context, ArrayList<String> quotes) {
@@ -57,7 +60,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Clicked: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, QuoteViewActivity.class);
+                intent.putExtra(Constants.QUOTE_KEY, quotes.get(holder.getAdapterPosition()));
+                context.startActivity(intent);
             }
         });
     }
@@ -67,7 +72,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         return quotes.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.quote_list_text_view)
         TextView TV_quote;
@@ -76,7 +81,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         @BindView(R.id.quote_list_linear_layout)
         LinearLayout LL_quote;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

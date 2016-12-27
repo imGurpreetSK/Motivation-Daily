@@ -1,4 +1,4 @@
-package gurpreetsk.me.motivationdaily.reciever;
+package gurpreetsk.me.motivationdaily.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

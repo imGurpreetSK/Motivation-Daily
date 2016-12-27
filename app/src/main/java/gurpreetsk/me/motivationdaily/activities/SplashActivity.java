@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +53,11 @@ public class SplashActivity extends AppCompatActivity {
         editor.commit();
 
         database = FirebaseDatabase.getInstance();
-        database.setPersistenceEnabled(true);   //TODO: Crash here
+        try {
+            database.setPersistenceEnabled(true);   //TODO: Crash here
+        }catch (Exception e){
+            FirebaseCrash.report(e);
+        }
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.keepSynced(true);
 

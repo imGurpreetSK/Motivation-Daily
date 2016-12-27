@@ -1,4 +1,4 @@
-package gurpreetsk.me.motivationdaily.activities;
+package gurpreetsk.me.motivationdaily;
 
 import android.app.Application;
 

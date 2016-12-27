@@ -22,7 +22,7 @@ public class GridActivity extends AppCompatActivity {
         GridFragment gridFragment = new GridFragment();
         gridFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_grid_fragment_container ,gridFragment).commit();
-
+                .add(R.id.main_grid_fragment_container, gridFragment).commit();
     }
+
 }

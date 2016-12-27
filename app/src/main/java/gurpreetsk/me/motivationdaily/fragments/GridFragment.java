@@ -34,7 +34,7 @@ public class GridFragment extends Fragment {
     RecyclerView recyclerView;
 
     private static final String TAG = "GridFragment";
-    ArrayList<String> authorNameList = new ArrayList<>();
+    ArrayList<String> authorNameList;
     public static final int NO_OF_COLUMNS = 3;
 
 
@@ -48,10 +48,6 @@ public class GridFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_grid, container, false);
         authorNameList = getArguments().getStringArrayList(Constants.AUTHORS_KEY);
         ButterKnife.bind(this, v);
-
-        if (!NetworkCheck.isNetworkConnected(getContext())) {
-
-        }
 
         AuthorAdapter gridAdapter = new AuthorAdapter(getContext(), authorNameList);
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NO_OF_COLUMNS);

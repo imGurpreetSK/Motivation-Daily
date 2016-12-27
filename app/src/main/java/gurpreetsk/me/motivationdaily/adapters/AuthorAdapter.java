@@ -33,10 +33,10 @@ import gurpreetsk.me.motivationdaily.utils.Constants;
 
 public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHolder> {
 
-    ArrayList<String> authorList = new ArrayList<>();
-    Context context;
+    private ArrayList<String> authorList = new ArrayList<>();
+    private Context context;
 
-    ArrayList<String> authorQuotes = new ArrayList<>();
+    private ArrayList<String> authorQuotes = new ArrayList<>();
     private static final String TAG = "AuthorAdapter";
 
     public AuthorAdapter(Context context, ArrayList<String> authorList) {
@@ -65,7 +65,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
     }
 
-    void getQuotesFromFirebase(final String authorName) {
+    private void getQuotesFromFirebase(final String authorName) {
         DatabaseReference databaseReference;
 //        FirebaseDatabase database;
 //        database = FirebaseDatabase.getInstance();
@@ -75,7 +75,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(authorQuotes!=null)
+                if (authorQuotes != null)
                     authorQuotes.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren())
                     authorQuotes.add(child.child("Quote").getValue().toString());
@@ -99,7 +99,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         return authorList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.grid_element_image_view)
         ImageView IV_authorImage;
@@ -108,7 +108,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         @BindView(R.id.author_card_view)
         CardView cardView;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
