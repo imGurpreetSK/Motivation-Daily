@@ -68,6 +68,11 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         });
     }
 
+//    @Override
+//    public int getItemViewType(int position) {
+//        return (position==0?);
+//    }
+
     @Override
     public int getItemCount() {
         return quotes.size();
