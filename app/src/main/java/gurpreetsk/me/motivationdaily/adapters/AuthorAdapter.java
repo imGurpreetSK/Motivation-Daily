@@ -3,6 +3,9 @@ package gurpreetsk.me.motivationdaily.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.activities.GridActivity;
 import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
 import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
 import gurpreetsk.me.motivationdaily.utils.Constants;
@@ -42,7 +46,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
     private ArrayList<String> authorList = new ArrayList<>();
     private Context context;
-
+    int color;
     private ArrayList<String> authorQuotes = new ArrayList<>();
     private static final String TAG = "AuthorAdapter";
 
@@ -62,13 +66,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         //TODO: Set image url
         holder.TV_authorName.setText(authorList.get(position));
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getQuotesFromFirebase(authorList.get(holder.getAdapterPosition()));
-            }
-        });
-
         Glide.with(context)
                 .load(AuthorImageUrl.getAuthorImage(authorList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -86,12 +83,20 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                         Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
                         Palette palette = Palette.generate(bitmap);
                         int defaultColor = 0xFF333333;
-                        int color = palette.getMutedColor(defaultColor);
+                        color = palette.getMutedColor(defaultColor);
                         holder.TV_authorName.setBackgroundColor(color);
                         return false;
                     }
                 })
                 .into(holder.IV_authorImage);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getQuotesFromFirebase(authorList.get(holder.getAdapterPosition()), holder);
+            }
+        });
+
     }
 
 //    @Override
@@ -100,7 +105,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 //        //TODO: make first card big, denote it with quote of the day
 //    }
 
-    private void getQuotesFromFirebase(final String authorName) {
+    private void getQuotesFromFirebase(final String authorName, final MyViewHolder holder) {
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference().child(authorName);
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -114,7 +119,14 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 Intent sendAuthorsList = new Intent(context, QuoteListActivity.class);
                 sendAuthorsList.putStringArrayListExtra(Constants.QUOTES_KEY, authorQuotes);
                 sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
-                context.startActivity(sendAuthorsList);
+                sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Pair<View, String> p = Pair.create((View) holder.IV_authorImage, context.getResources().getString(R.string.authorimage_transition));
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((GridActivity) context, p);
+                    context.startActivity(sendAuthorsList, options.toBundle());     //TODO: not working properly
+                } else
+                    context.startActivity(sendAuthorsList);
                 Log.i(TAG, "onDataChange: Got author quotes, Started QuoteListActivity");
             }
 
