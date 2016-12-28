@@ -9,4 +9,5 @@
     <color name="colorTextIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorBackground">@color/lightPrimary</color>
+    <color name="red">#EF5350</color>
 </resources>
