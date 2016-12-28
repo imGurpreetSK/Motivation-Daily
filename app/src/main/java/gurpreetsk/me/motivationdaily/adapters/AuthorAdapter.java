@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +45,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
     private ArrayList<String> authorList = new ArrayList<>();
     private Context context;
-    int color;
+    private int color;
     private ArrayList<String> authorQuotes = new ArrayList<>();
     private static final String TAG = "AuthorAdapter";
 
@@ -121,9 +120,8 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
                 sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Pair<View, String> p = Pair.create((View) holder.IV_authorImage, context.getResources().getString(R.string.authorimage_transition));
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((GridActivity) context, p);
+                            makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
                     context.startActivity(sendAuthorsList, options.toBundle());     //TODO: not working properly
                 } else
                     context.startActivity(sendAuthorsList);

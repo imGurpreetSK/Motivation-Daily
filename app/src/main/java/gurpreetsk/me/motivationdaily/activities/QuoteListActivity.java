@@ -1,5 +1,6 @@
 package gurpreetsk.me.motivationdaily.activities;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -7,8 +8,10 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,14 +25,11 @@ import gurpreetsk.me.motivationdaily.utils.Constants;
 
 public class QuoteListActivity extends AppCompatActivity {
 
-    //    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.detail_image_view)
     ImageView authorImage;
-//    @BindView(R.id.appBarLayout)
-//    AppBarLayout appBarLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class QuoteListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_quote_view, menu);
+        getMenuInflater().inflate(R.menu.menu_quote_list, menu);
         return true;
     }
 

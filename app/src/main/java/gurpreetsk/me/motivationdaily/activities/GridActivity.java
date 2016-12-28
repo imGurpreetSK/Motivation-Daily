@@ -1,5 +1,6 @@
 package gurpreetsk.me.motivationdaily.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,10 @@ public class GridActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.ic_favorites:
+                startActivity(new Intent(this, FavoritesActivity.class));
+        }
+        return true;
     }
 }

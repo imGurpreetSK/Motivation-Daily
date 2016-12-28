@@ -7,10 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-
-import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
 
@@ -18,7 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.adapters.ScreenSlidePagerAdapter;
-import gurpreetsk.me.motivationdaily.fragments.QuoteFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 import gurpreetsk.me.motivationdaily.utils.DepthPageTransformer;
 
@@ -52,7 +47,7 @@ public class QuoteViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_quote_view, menu);
+        getMenuInflater().inflate(R.menu.menu_quote_list, menu);
         return true;
     }
 

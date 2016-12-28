@@ -12,4 +12,5 @@
     <string name="ic_settings">Settings</string>
     <string name="authorimage_transition">Author Image Transition</string>
     <string name="toolbar_imageview_content_description">Author image</string>
+    <string name="favorites">Favourites</string>
 </resources>
