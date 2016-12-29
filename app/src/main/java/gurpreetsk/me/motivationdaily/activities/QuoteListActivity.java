@@ -34,6 +34,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
     CollapsingToolbarLayout collapsingToolbarLayout;
     //    @BindView(R.id.detail_image_view)
     ImageView authorImage;
+    Toolbar toolbar;
     LinearLayout twoPaneView;
 
     public static boolean mTwoPane;
@@ -63,6 +64,12 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
                     .load(AuthorImageUrl.getAuthorImage(authorName))
                     .into(authorImage);
         }
+
+        if(mTwoPane) {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(authorName);
+        }
+
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
         bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
@@ -71,6 +78,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.quote_list_container, quoteListFragment)
                 .commit();
+
 
     }
 
