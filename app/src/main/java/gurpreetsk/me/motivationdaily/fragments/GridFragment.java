@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,14 @@ public class GridFragment extends Fragment {
     private static final String TAG = "GridFragment";
     ArrayList<String> authorNameList;
     RecyclerView.LayoutManager gridLayoutManager;
-    public static final int PORTRAIT_NO_OF_COLUMNS = 3;
-    public static final int LANDSCAPE_NO_OF_COLUMNS = 4;
+    public static final int PORTRAIT_LESS_NO_OF_COLUMNS = 3;
+    public static final int PORTRAIT_MORE_NO_OF_COLUMNS = 4;
+    public static final int LANDSCAPE_LESS_NO_OF_COLUMNS = 4;
+    public static final int LANDSCAPE_MORE_NO_OF_COLUMNS = 5;
 
 
-    public GridFragment() {}
+    public GridFragment() {
+    }
 
 
     @Override
@@ -44,10 +48,17 @@ public class GridFragment extends Fragment {
         AuthorAdapter gridAdapter = new AuthorAdapter(getContext(), authorNameList);
 
         int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT)
-            gridLayoutManager = new GridLayoutManager(getContext(), PORTRAIT_NO_OF_COLUMNS);
-        else if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-            gridLayoutManager = new GridLayoutManager(getContext(), LANDSCAPE_NO_OF_COLUMNS);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT && dpWidth < 600)
+            gridLayoutManager = new GridLayoutManager(getContext(), PORTRAIT_LESS_NO_OF_COLUMNS);
+        else if (orientation == Configuration.ORIENTATION_LANDSCAPE && dpHeight < 600)
+            gridLayoutManager = new GridLayoutManager(getContext(), LANDSCAPE_LESS_NO_OF_COLUMNS);
+        else if (orientation == Configuration.ORIENTATION_PORTRAIT && dpWidth >= 600)
+            gridLayoutManager = new GridLayoutManager(getContext(), PORTRAIT_MORE_NO_OF_COLUMNS);
+        else if (orientation == Configuration.ORIENTATION_LANDSCAPE && dpHeight >= 600)
+            gridLayoutManager = new GridLayoutManager(getContext(), LANDSCAPE_MORE_NO_OF_COLUMNS);
 
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(gridAdapter);
