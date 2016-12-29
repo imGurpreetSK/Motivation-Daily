@@ -61,7 +61,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.TV_quote.setText(quotes.get(position));
         //TODO: save in DB and create view for viewing bookmarked quotes
         ArrayList<String> idList = queryFavourites();
@@ -99,14 +99,14 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(QuoteListActivity.mTwoPane){
-                    ((QuoteListFragment.Callback)context).OnItemSelected(quotes, author, quotes.get(holder.getAdapterPosition()));
-                }else {
-                    Intent intent = new Intent(context, QuoteViewActivity.class);
-                    intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
-                    intent.putExtra(Constants.QUOTE_NUMBER_KEY, holder.getAdapterPosition());
-                    context.startActivity(intent);
-                }
+//                if(QuoteListActivity.mTwoPane){
+                    ((QuoteListFragment.Callback)context).OnItemSelected(quotes, author, position);
+//                }else {
+//                    Intent intent = new Intent(context, QuoteViewActivity.class);
+//                    intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
+//                    intent.putExtra(Constants.QUOTE_NUMBER_KEY, holder.getAdapterPosition());
+//                    context.startActivity(intent);
+//                }
             }
         });
     }
