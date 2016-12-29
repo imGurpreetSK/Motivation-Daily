@@ -23,8 +23,7 @@ public class QuoteFragment extends Fragment {
     TextView TV_quote;
 
 
-    public QuoteFragment() {
-    }
+    public QuoteFragment() {}
 
 
     @Override

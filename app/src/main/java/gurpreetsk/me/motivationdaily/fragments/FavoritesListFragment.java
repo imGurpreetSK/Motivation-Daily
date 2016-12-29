@@ -26,8 +26,11 @@ public class FavoritesListFragment extends Fragment {
     RecyclerView favoritesRecyclerView;
 
 
-    public FavoritesListFragment() {
-        // Required empty public constructor
+    public FavoritesListFragment() {}
+
+
+    public interface FavoritesCallback {
+        void OnFavoriteItemSelected(ArrayList<String> quotes, int position);
     }
 
 

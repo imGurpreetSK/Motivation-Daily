@@ -79,7 +79,6 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
                 .add(R.id.quote_list_container, quoteListFragment)
                 .commit();
 
-
     }
 
     @Override
@@ -106,11 +105,11 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         if (mTwoPane) {
 
             QuoteFragment quoteFragment = new QuoteFragment();
-            Bundle bundle =new Bundle();
+            Bundle bundle = new Bundle();
             bundle.putString(Constants.QUOTE_KEY, quotes.get(position));
             quoteFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
-                    .add( R.id.quote_fragment_container, quoteFragment)
+                    .replace(R.id.quote_fragment_container, quoteFragment)
                     .commit();
 
         } else {
