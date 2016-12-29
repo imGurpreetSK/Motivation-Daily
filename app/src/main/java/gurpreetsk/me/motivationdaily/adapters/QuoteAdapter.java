@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,10 +26,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
 import gurpreetsk.me.motivationdaily.activities.QuoteViewActivity;
 import gurpreetsk.me.motivationdaily.data.Database;
 import gurpreetsk.me.motivationdaily.data.QuotesTable;
 import gurpreetsk.me.motivationdaily.data.TableStructure;
+import gurpreetsk.me.motivationdaily.fragments.QuoteListFragment;
 import gurpreetsk.me.motivationdaily.models.Quote;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
@@ -96,10 +99,14 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, QuoteViewActivity.class);
-                intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
-                intent.putExtra(Constants.QUOTE_NUMBER_KEY, holder.getAdapterPosition());
-                context.startActivity(intent);
+                if(QuoteListActivity.mTwoPane){
+                    ((QuoteListFragment.Callback)context).OnItemSelected(quotes, author, quotes.get(holder.getAdapterPosition()));
+                }else {
+                    Intent intent = new Intent(context, QuoteViewActivity.class);
+                    intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
+                    intent.putExtra(Constants.QUOTE_NUMBER_KEY, holder.getAdapterPosition());
+                    context.startActivity(intent);
+                }
             }
         });
     }

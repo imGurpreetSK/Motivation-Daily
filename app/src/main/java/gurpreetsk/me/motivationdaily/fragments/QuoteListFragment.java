@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
 import gurpreetsk.me.motivationdaily.adapters.QuoteAdapter;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 import gurpreetsk.me.motivationdaily.utils.SimpleDividerItemDecoration;
@@ -30,7 +31,13 @@ public class QuoteListFragment extends Fragment {
     private static final String TAG = "QuoteListFragment";
 
 
-    public QuoteListFragment() {}
+    public QuoteListFragment() {
+    }
+
+
+    public interface Callback {
+        void OnItemSelected(ArrayList<String> quotes, String authorName, String quote);
+    }
 
 
     @Override
@@ -39,12 +46,14 @@ public class QuoteListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_quote_list, container, false);
         ButterKnife.bind(this, v);
+        if (QuoteListActivity.mTwoPane) {
 
+        }
         quotes = getArguments().getStringArrayList(Constants.QUOTES_KEY);
         authorName = getArguments().getString(Constants.AUTHOR_NAME_KEY);
         if (quotes != null) {
             Log.i(TAG, "onCreateView: Got " + quotes.size() + " quotes.");
-            Log.i(TAG, "onCreateView: Last quote is " + quotes.get(quotes.size()-1));
+            Log.i(TAG, "onCreateView: Last quote is " + quotes.get(quotes.size() - 1));
         } else
             Log.e(TAG, "onCreateView: QuotesArrayList is null.");
 

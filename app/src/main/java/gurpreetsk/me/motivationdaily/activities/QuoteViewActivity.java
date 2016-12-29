@@ -21,8 +21,8 @@ public class QuoteViewActivity extends AppCompatActivity {
 
     @BindView(R.id.quotePager)
     ViewPager quotePager;
-    @BindView(R.id.my_toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.my_toolbar)
+//    Toolbar toolbar;
 
     ArrayList<String> quotes;
     int quoteNumber;
@@ -32,7 +32,8 @@ public class QuoteViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_view);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        
+//        setSupportActionBar(toolbar);
         //TODO:NPE because of this
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);

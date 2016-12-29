@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
@@ -22,7 +23,8 @@ public class QuoteFragment extends Fragment {
     TextView TV_quote;
 
 
-    public QuoteFragment() {}
+    public QuoteFragment() {
+    }
 
 
     @Override

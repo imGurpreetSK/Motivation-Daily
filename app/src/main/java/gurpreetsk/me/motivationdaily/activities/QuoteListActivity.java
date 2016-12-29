@@ -13,22 +13,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.fragments.QuoteFragment;
 import gurpreetsk.me.motivationdaily.fragments.QuoteListFragment;
 import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
-public class QuoteListActivity extends AppCompatActivity {
+public class QuoteListActivity extends AppCompatActivity implements QuoteListFragment.Callback {
 
-    @BindView(R.id.collapsing_toolbar_layout)
+    //    @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.detail_image_view)
+    //    @BindView(R.id.detail_image_view)
     ImageView authorImage;
+    LinearLayout twoPaneView;
+
+    public static boolean mTwoPane;
 
 
     @Override
@@ -36,25 +43,44 @@ public class QuoteListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_list);
         ButterKnife.bind(this);
+
         //TODO:NPE because of this
 //        if(getSupportActionBar()!=null)
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
-        collapsingToolbarLayout.setTitle(authorName);
-//        collapsingToolbarLayout.setcolor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary)));
-        Glide.with(this)
-                .load(AuthorImageUrl.getAuthorImage(authorName))
-                .into(authorImage);
 
+        mTwoPane = findViewById(R.id.two_pane_view) != null;
 
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
-        bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
-        QuoteListFragment quoteListFragment = new QuoteListFragment();
-        quoteListFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.quote_list_container, quoteListFragment)
-                .commit();
+//        if (!mTwoPane) {
+//            collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+//            authorImage = (ImageView) findViewById(R.id.detail_image_view);
+//            String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
+//
+//            collapsingToolbarLayout.setTitle(authorName);
+////        collapsingToolbarLayout.setcolor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary)));
+//            Glide.with(this)
+//                    .load(AuthorImageUrl.getAuthorImage(authorName))
+//                    .into(authorImage);
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
+//            bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
+//            QuoteListFragment quoteListFragment = new QuoteListFragment();
+//            quoteListFragment.setArguments(bundle);
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.quote_list_container, quoteListFragment)
+//                    .commit();
+//        }
+//        else{
+//            Bundle bundle = new Bundle();
+//            bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
+//            bundle.putString(Constants.AUTHOR_NAME_KEY, getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY));
+//            QuoteListFragment quoteListFragment = new QuoteListFragment();
+//            quoteListFragment.setArguments(bundle);
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.quote_list_container, quoteListFragment)
+//                    .commit();
+//        }
+
     }
 
     @Override
@@ -71,6 +97,45 @@ public class QuoteListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        supportFinishAfterTransition();
+        if (!mTwoPane)
+            supportFinishAfterTransition();
+    }
+
+    @Override
+    public void OnItemSelected(ArrayList<String> quotes, String authorName, String quote) {
+
+        if (mTwoPane) {
+
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList(Constants.QUOTES_KEY, quotes);
+            bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
+            QuoteListFragment quoteListFragment = new QuoteListFragment();
+            quoteListFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.quote_list_container, quoteListFragment)
+                    .commit();
+
+
+
+        } else {
+            collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+            authorImage = (ImageView) findViewById(R.id.detail_image_view);
+//            String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
+
+            collapsingToolbarLayout.setTitle(authorName);
+//        collapsingToolbarLayout.setcolor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary)));
+            Glide.with(this)
+                    .load(AuthorImageUrl.getAuthorImage(authorName))
+                    .into(authorImage);
+
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
+            bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
+            QuoteListFragment quoteListFragment = new QuoteListFragment();
+            quoteListFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.quote_list_container, quoteListFragment)
+                    .commit();
+        }
     }
 }

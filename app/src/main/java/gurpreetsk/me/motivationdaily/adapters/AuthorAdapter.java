@@ -120,9 +120,12 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
                 sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
-                    context.startActivity(sendAuthorsList, options.toBundle());     //TODO: not working properly
+                    if (!QuoteListActivity.mTwoPane) {
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
+                        context.startActivity(sendAuthorsList, options.toBundle());
+                    } else
+                        context.startActivity(sendAuthorsList);
                 } else
                     context.startActivity(sendAuthorsList);
                 Log.i(TAG, "onDataChange: Got author quotes, Started QuoteListActivity");
