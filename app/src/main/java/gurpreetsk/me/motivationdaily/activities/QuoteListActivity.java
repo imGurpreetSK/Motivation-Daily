@@ -65,7 +65,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
                     .into(authorImage);
         }
 
-        if(mTwoPane) {
+        if (mTwoPane) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setTitle(authorName);
         }

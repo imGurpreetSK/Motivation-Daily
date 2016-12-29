@@ -99,14 +99,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(QuoteListActivity.mTwoPane){
-                    ((QuoteListFragment.Callback)context).OnItemSelected(quotes, author, position);
-//                }else {
-//                    Intent intent = new Intent(context, QuoteViewActivity.class);
-//                    intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
-//                    intent.putExtra(Constants.QUOTE_NUMBER_KEY, holder.getAdapterPosition());
-//                    context.startActivity(intent);
-//                }
+                //Handles data transfer on different devices
+                ((QuoteListFragment.Callback) context).OnItemSelected(quotes, author, position);
             }
         });
     }

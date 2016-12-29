@@ -30,7 +30,7 @@ public class AuthorImageUrl {
             case "Bill Gates":
                 return "https://upload.wikimedia.org/wikipedia/commons/1/19/Bill_Gates_June_2015.jpg";
             case "Bob Marley":
-                return "https://upload.wikimedia.org/wikipedia/commons/5/5e/Bob-Marley.jpg";
+                return "https://img11.deviantart.net/3187/i/2008/091/c/e/bob_marley_by_antiemo.jpg";
             case "Bruce Lee":
                 return "https://upload.wikimedia.org/wikipedia/commons/c/ca/Bruce_Lee_1973.jpg";
             case "Buddha":
@@ -42,7 +42,7 @@ public class AuthorImageUrl {
             case "Charles Dickens":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Dickens_Gurney_head.jpg/220px-Dickens_Gurney_head.jpg";
             case "Confucius":
-                return "https://upload.wikimedia.org/wikipedia/commons/5/54/Confucius_Tang_Dynasty.jpg";
+                return "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT7SMCOCleNBKD2kpoVzxcOdIjr6hkbVxkTPDpv9eN-rege3SCG";
             case "Conor McGregor":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Conor_McGregor%2C_UFC_189_World_Tour_London_%282%29.jpg/220px-Conor_McGregor%2C_UFC_189_World_Tour_London_%282%29.jpg";
             case "Dalai Lama":

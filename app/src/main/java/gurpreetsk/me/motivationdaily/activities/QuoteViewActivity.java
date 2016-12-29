@@ -21,8 +21,6 @@ public class QuoteViewActivity extends AppCompatActivity {
 
     @BindView(R.id.quotePager)
     ViewPager quotePager;
-//    @BindView(R.id.my_toolbar)
-//    Toolbar toolbar;
 
     ArrayList<String> quotes;
     int quoteNumber;
@@ -32,30 +30,17 @@ public class QuoteViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_view);
         ButterKnife.bind(this);
-        
+
 //        setSupportActionBar(toolbar);
         //TODO:NPE because of this
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        if(QuoteListActivity.mTwoPane) {
-//            quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
-//            quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
 
-//            PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
-//            quotePager.setAdapter(pagerAdapter);
-//            quotePager.setPageTransformer(true, new DepthPageTransformer());
-//            quotePager.setCurrentItem(quoteNumber);
-//        }
-//        else{
+        quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
+        quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
 
-            quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
-            quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
-
-            PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
-            quotePager.setAdapter(pagerAdapter);
-            quotePager.setPageTransformer(true, new DepthPageTransformer());
-            quotePager.setCurrentItem(quoteNumber);
-//        }
+        PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
+        quotePager.setAdapter(pagerAdapter);
+        quotePager.setPageTransformer(true, new DepthPageTransformer());
+        quotePager.setCurrentItem(quoteNumber);
     }
 
     @Override
