@@ -37,13 +37,18 @@ public class QuoteViewActivity extends AppCompatActivity {
         //TODO:NPE because of this
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
-        quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
+        if(QuoteListActivity.mTwoPane) {
+            quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
+            quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
 
-        PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
-        quotePager.setAdapter(pagerAdapter);
-        quotePager.setPageTransformer(true, new DepthPageTransformer());
-        quotePager.setCurrentItem(quoteNumber);
+            PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
+            quotePager.setAdapter(pagerAdapter);
+            quotePager.setPageTransformer(true, new DepthPageTransformer());
+            quotePager.setCurrentItem(quoteNumber);
+        }
+        else{
+
+        }
     }
 
     @Override

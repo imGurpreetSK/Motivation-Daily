@@ -97,13 +97,19 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
 
         if (mTwoPane) {
 
-
+            QuoteFragment quoteFragment = new QuoteFragment();
+            Bundle bundle =new Bundle();
+            bundle.putString(Constants.QUOTE_KEY, quotes.get(position));
+            quoteFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .add( R.id.quote_fragment_container, quoteFragment)
+                    .commit();
 
         } else {
 
             Intent intent = new Intent(this, QuoteViewActivity.class);
             intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
-            intent.putExtra(Constants.QUOTE_NUMBER_KEY, quotes.get(position));
+            intent.putExtra(Constants.QUOTE_NUMBER_KEY, position);
             startActivity(intent);
 
         }
