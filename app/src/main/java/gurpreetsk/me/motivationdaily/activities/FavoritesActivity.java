@@ -41,7 +41,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesLis
         Bundle bundle = getAllFavorites();
         favoritesListFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.favorites_quote_list_container, favoritesListFragment)
+                .replace(R.id.favorites_fragment_container, favoritesListFragment)
                 .commit();
 
     }
