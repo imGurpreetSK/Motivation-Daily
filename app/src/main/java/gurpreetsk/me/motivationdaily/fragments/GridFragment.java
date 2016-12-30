@@ -50,8 +50,6 @@ public class GridFragment extends Fragment {
         authorNameList = getArguments().getStringArrayList(Constants.AUTHORS_KEY);
         ButterKnife.bind(this, v);
 
-
-
         AuthorAdapter gridAdapter = new AuthorAdapter(getContext(), authorNameList);
 
         int orientation = getResources().getConfiguration().orientation;

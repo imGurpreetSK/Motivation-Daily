@@ -18,13 +18,13 @@ public class AuthorImageUrl {
             case "Abraham Lincoln":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/220px-Abraham_Lincoln_O-77_matte_collodion_print.jpg";
             case "Albert Einstein":
-                return "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/220px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg";
+                return "http://www.baybul.net/wp-content/uploads/2012/05/AlbertEinstein.jpg";
             case "Alexander Pope":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Alexander_Pope_by_Michael_Dahl.jpg/220px-Alexander_Pope_by_Michael_Dahl.jpg";
             case "Aristotle":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/800px-Aristotle_Altemps_Inv8575.jpg";
             case "Barack Obama":
-                return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/220px-President_Barack_Obama.jpg";
+                return "https://lh6.googleusercontent.com/-2lJYGtfXKwQ/AAAAAAAAAAI/AAAAAAAB2HQ/QSmIw0nQN_c/photo.jpg";
             case "Benjamin Franklin":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/BenFranklinDuplessis.jpg/220px-BenFranklinDuplessis.jpg";
             case "Bill Gates":
@@ -86,11 +86,11 @@ public class AuthorImageUrl {
             case "Khalil Gibran":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Khalil_Gibran.jpg/220px-Khalil_Gibran.jpg";
             case "Kurt Cobain":
-                return "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Nirvana_around_1992.jpg/220px-Nirvana_around_1992.jpg";
+                return "https://s-media-cache-ak0.pinimg.com/originals/b1/78/51/b17851790b3d5a8ab85bfe8d431e0384.jpg";
             case "Lao Tzu":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/DaodeTianzun.jpg/250px-DaodeTianzun.jpg";
             case "Leonardo Da Vinci":
-                return "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Francesco_Melzi_-_Portrait_of_Leonardo_-_WGA14795.jpg/220px-Francesco_Melzi_-_Portrait_of_Leonardo_-_WGA14795.jpg";
+                return "http://www.leonardodavinci.net/images/leonardo-da-vinci.jpg";
             case "Lionel messi":
                 return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/2015_UEFA_Super_Cup_64_crop.jpg/220px-2015_UEFA_Super_Cup_64_crop.jpg";
             case "Luke Bryan":

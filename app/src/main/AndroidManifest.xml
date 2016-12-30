@@ -3,8 +3,8 @@
     package="gurpreetsk.me.motivationdaily">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
 
+    <!-- <uses-permission android:name="android.permission.WAKE_LOCK"/> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -47,9 +47,15 @@
                 android:value=".activities.GridActivity" />
         </activity>
 
-        <!--<receiver android:process=":remote" android:name=".receiver.Alarm"/>-->
+        <!-- <receiver android:process=":remote" android:name=".receiver.Alarm"/> -->
 
-
+        <activity
+            android:name=".activities.AuthorsActivity"
+            android:parentActivityName=".activities.GridActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.GridActivity" />
+        </activity>
     </application>
 
 </manifest>

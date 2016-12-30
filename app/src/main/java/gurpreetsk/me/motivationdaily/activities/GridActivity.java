@@ -1,30 +1,24 @@
 package gurpreetsk.me.motivationdaily.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.adapters.AuthorAdapter;
 import gurpreetsk.me.motivationdaily.adapters.DailyQuotePagerAdapter;
-import gurpreetsk.me.motivationdaily.adapters.ScreenSlidePagerAdapter;
 import gurpreetsk.me.motivationdaily.fragments.GridFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 import gurpreetsk.me.motivationdaily.utils.DepthPageTransformer;
@@ -33,12 +27,12 @@ public class GridActivity extends AppCompatActivity {
 
     @BindView(R.id.my_toolbar)
     Toolbar toolbar;
-//    @BindView(R.id.daily_quote_textview)
-//    TextView TV_DailyQuote;
-//    @BindView(R.id.daily_quote_author_textview)
-//    TextView TV_AuthorDailyQuote;
     @BindView(R.id.daily_quote_viewpager)
     ViewPager dailyQuoteViewPager;
+    @BindView(R.id.authors_list_textview)
+    TextView TV_AllAuthors;
+    @BindView(R.id.view_all_textview)
+    TextView TV_ViewAll;
 
 
     private static final String TAG = "GridActivity";
@@ -56,6 +50,24 @@ public class GridActivity extends AppCompatActivity {
 
         authorsList = getIntent().getStringArrayListExtra(Constants.AUTHORS_KEY);
         dailyQuotesList = getIntent().getStringArrayListExtra(Constants.DAILY_QUOTES);
+
+        TV_AllAuthors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
+                intent.putStringArrayListExtra(Constants.AUTHORS_KEY, authorsList);
+                startActivity(intent);
+            }
+        });
+        TV_ViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
+                intent.putStringArrayListExtra(Constants.AUTHORS_KEY, authorsList);
+                startActivity(intent);
+            }
+        });
+
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(Constants.AUTHORS_KEY, authorsList);
         GridFragment gridFragment = new GridFragment();
@@ -87,37 +99,6 @@ public class GridActivity extends AppCompatActivity {
                 startActivity(new Intent(this, FavoritesActivity.class));
         }
         return true;
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putStringArray(Constants.DAILY_QUOTES, data);
-//        outState.putStringArrayList(Constants.QUOTES_KEY, authorsList);
-    }
-
-    private class QuoteAsyncTask extends AsyncTask<Void, Void, String[]> {
-
-        @Override
-        protected String[] doInBackground(Void... voids) {
-            String[] data = new String[2];
-//            ArrayList<DailyQuotes> data = new ArrayList<>();
-            try {
-                Document doc = Jsoup.connect("https://www.brainyquote.com/quotes_of_the_day.html").get();
-                data[0] = doc.select("span.bqQuoteLink a").first().html();
-                data[1] = doc.select("div.bq-aut a").first().html();
-//                data[2] = doc.select("span.bqQuoteLink a").html();
-//                data[3] = doc.select("div.bq-aut a").first().html();
-//                data[4] = doc.select("span.bqQuoteLink a").first().html();
-//                data[5] = doc.select("div.bq-aut a").first().html();
-                Log.i(TAG, "doInBackground: " + Arrays.toString(data));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return data;
-        }
-
     }
 
 }

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.activities.AuthorsActivity;
 import gurpreetsk.me.motivationdaily.activities.GridActivity;
 import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
 import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
@@ -101,13 +102,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
     }
 
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        super.getItemViewType(position);
-//        //TODO: make first card big, denote it with quote of the day
-//    }
-
-
     private void getQuotesFromFirebase(final String authorName, final MyViewHolder holder) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("authors").child(authorName);
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -124,8 +118,15 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (!QuoteListActivity.mTwoPane) {
-                        ActivityOptionsCompat options = ActivityOptionsCompat.
-                                makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
+                        ActivityOptionsCompat options;
+                        try {
+                            options = ActivityOptionsCompat.
+                                    makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            options = ActivityOptionsCompat.
+                                    makeSceneTransitionAnimation((AuthorsActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
+                        }
                         context.startActivity(sendAuthorsList, options.toBundle());
                     } else
                         context.startActivity(sendAuthorsList);

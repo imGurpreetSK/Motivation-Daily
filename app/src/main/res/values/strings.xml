@@ -14,4 +14,5 @@
     <string name="toolbar_imageview_content_description">Author image</string>
     <string name="favorites">Favourites</string>
     <string name="no_favorites_found">Boo!\nNo favorites added\nAdd by clicking on bookmark icon next to the quote :D</string>
+    <string name="view_all"><![CDATA[View all>]]></string>
 </resources>

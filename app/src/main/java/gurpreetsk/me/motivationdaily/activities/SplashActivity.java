@@ -57,10 +57,10 @@ public class SplashActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: Started at " + DateFormat.getTimeInstance().format(new Date()));
 
         // set first run shared
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(getString(R.string.isFirstRun), true);
-        editor.commit();
+//        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putBoolean(getString(R.string.isFirstRun), true);
+//        editor.commit();
 
         database = FirebaseDatabase.getInstance();
         try {
@@ -70,10 +70,10 @@ public class SplashActivity extends AppCompatActivity {
         }
         databaseReference = FirebaseDatabase.getInstance().getReference();
         AuthorDatabaseReference = databaseReference.child("authors");
-        AuthorDatabaseReference.limitToFirst(5);
+//        AuthorDatabaseReference.startAt("Abraham Lincoln");
+//        AuthorDatabaseReference.endAt("Benjamin Franklin");
         AuthorDatabaseReference.keepSynced(true);
         DailyQuotesDatabaseReference = databaseReference.child("daily_quotes");
-        DailyQuotesDatabaseReference.limitToFirst(5);
         DailyQuotesDatabaseReference.keepSynced(true);
 
         //TODO: CHECK FOR INTERNET CONNECTIVITY ON FIRST RUN
@@ -83,16 +83,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-//        isFirstRun = preferences.getBoolean(getString(R.string.isFirstRun), true);
-//        if (isFirstRun && !NetworkCheck.isNetworkConnected(this))
-//            Snackbar.make(findViewById(R.id.activity_splash), getString(R.string.firstRunInternetNeeded), Snackbar.LENGTH_INDEFINITE);
-//            Toast.makeText(this, getString(R.string.firstRunInternetNeeded), Toast.LENGTH_SHORT).show();
-//        else {
         getDailyQuotes();
         getAuthorsFromFirebase();
-
-//            preferences.edit().putBoolean(getString(R.string.isFirstRun), false).apply();
-//        }
     }
 
     private void getDailyQuotes() {
@@ -101,12 +93,6 @@ public class SplashActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren())
                     dailyQuotesList.add(child.getValue().toString());
-
-
-//                Intent sendAuthorsList = new Intent(SplashActivity.this, GridActivity.class);
-//                sendAuthorsList.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
-//                startActivity(sendAuthorsList);
-//                Log.i(TAG, "onDataChange: Got Daily quotes");
             }
 
             @Override
