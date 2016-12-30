@@ -23,42 +23,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="@dimen/activity_margin_small"
-                app:cardCornerRadius="@dimen/card_elevation"
-                app:elevation="@dimen/card_elevation">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/daily_quote_viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="200dp" />
 
-                    <TextView
-                        android:id="@+id/daily_quote_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textSize="@dimen/daily_quote_text_size"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/daily_quote_author_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:textSize="@dimen/authorname_text_size"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp" />
+            </RelativeLayout>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"

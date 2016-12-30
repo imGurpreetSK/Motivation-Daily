@@ -3,6 +3,9 @@ package gurpreetsk.me.motivationdaily.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,17 +23,23 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.adapters.DailyQuotePagerAdapter;
+import gurpreetsk.me.motivationdaily.adapters.ScreenSlidePagerAdapter;
 import gurpreetsk.me.motivationdaily.fragments.GridFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
+import gurpreetsk.me.motivationdaily.utils.DepthPageTransformer;
 
 public class GridActivity extends AppCompatActivity {
 
     @BindView(R.id.my_toolbar)
     Toolbar toolbar;
-    @BindView(R.id.daily_quote_textview)
-    TextView TV_DailyQuote;
-    @BindView(R.id.daily_quote_author_textview)
-    TextView TV_AuthorDailyQuote;
+//    @BindView(R.id.daily_quote_textview)
+//    TextView TV_DailyQuote;
+//    @BindView(R.id.daily_quote_author_textview)
+//    TextView TV_AuthorDailyQuote;
+    @BindView(R.id.daily_quote_viewpager)
+    ViewPager dailyQuoteViewPager;
+
 
     private static final String TAG = "GridActivity";
     //    String[] data ;
@@ -53,6 +62,12 @@ public class GridActivity extends AppCompatActivity {
         gridFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.main_grid_fragment_container, gridFragment).commit();
+
+        PagerAdapter pagerAdapter = new DailyQuotePagerAdapter(getSupportFragmentManager(), dailyQuotesList);
+        dailyQuoteViewPager.setAdapter(pagerAdapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(dailyQuoteViewPager, true);
+//        dailyQuoteViewPager.setPageTransformer(true, new DepthPageTransformer());
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.main_grid_fragment_container2, gridFragment).commit();
     }
