@@ -51,8 +51,8 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.TV_authorName.setText(tagsList.get(position)); //TODO: remove this and add images
-        holder.TV_authorName.setTextColor(context.getResources().getColor(R.color.primaryText));
+        holder.TV_TagName.setText(tagsList.get(position)); //TODO: remove this and add images
+        holder.TV_TagName.setTextColor(context.getResources().getColor(R.color.primaryText));
 
 //        Glide.with(context)
 //                .load(AuthorImageUrl.getAuthorImage(tagsList.get(position)))
@@ -71,11 +71,11 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
 //                        Palette palette = Palette.generate(bitmap);
 //                        int defaultColor = 0xFF333333;
 //                        color = palette.getMutedColor(defaultColor);
-//                        holder.TV_authorName.setBackgroundColor(color);
+//                        holder.TV_TagName.setBackgroundColor(color);
 //                        return false;
 //                    }
 //                })
-//                .into(holder.IV_authorImage);
+//                .into(holder.IV_TagImage);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,9 +124,9 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.grid_element_image_view)
-        ImageView IV_authorImage;
+        ImageView IV_TagImage;
         @BindView(R.id.grid_element_text_view)
-        TextView TV_authorName;
+        TextView TV_TagName;
         @BindView(R.id.author_card_view)
         CardView cardView;
 

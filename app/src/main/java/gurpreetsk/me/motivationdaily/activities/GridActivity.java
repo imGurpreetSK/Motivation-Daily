@@ -75,16 +75,16 @@ public class GridActivity extends AppCompatActivity {
         TV_AllTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
-                intent.putStringArrayListExtra(Constants.AUTHORS_KEY, tagsList);
+                Intent intent = new Intent(GridActivity.this, TagsActivity.class);
+                intent.putStringArrayListExtra(Constants.TAGS_CATEGORIES, tagsList);
                 startActivity(intent);
             }
         });
         TV_ViewAllTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
-                intent.putStringArrayListExtra(Constants.AUTHORS_KEY, tagsList);
+                Intent intent = new Intent(GridActivity.this, TagsActivity.class);
+                intent.putStringArrayListExtra(Constants.TAGS_CATEGORIES, tagsList);
                 startActivity(intent);
             }
         });
