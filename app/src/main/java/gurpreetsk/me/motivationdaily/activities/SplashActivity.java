@@ -33,10 +33,11 @@ public class SplashActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     DatabaseReference DailyQuotesDatabaseReference;
     DatabaseReference AuthorDatabaseReference;
-
+    DatabaseReference TagsDatabaseReference;
 
     ArrayList<String> authorNameList = new ArrayList<>();
     ArrayList<String> dailyQuotesList = new ArrayList<>();
+    ArrayList<String> tagsNameList = new ArrayList<>();
 
     Boolean isFirstRun;
     SharedPreferences preferences;
@@ -75,6 +76,8 @@ public class SplashActivity extends AppCompatActivity {
         AuthorDatabaseReference.keepSynced(true);
         DailyQuotesDatabaseReference = databaseReference.child("daily_quotes");
         DailyQuotesDatabaseReference.keepSynced(true);
+        TagsDatabaseReference = databaseReference.child("tags");
+        TagsDatabaseReference.keepSynced(true);
 
         //TODO: CHECK FOR INTERNET CONNECTIVITY ON FIRST RUN
 
@@ -84,7 +87,26 @@ public class SplashActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         getDailyQuotes();
+        getTagsFromFirebase();
         getAuthorsFromFirebase();
+    }
+
+    private void getTagsFromFirebase() {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    tagsNameList.add(child.toString());
+//                    Log.i(TAG, "onTagsDataChange: " + child.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onTagsCancelled: ", databaseError.toException());
+            }
+        };
+        TagsDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void getDailyQuotes() {
@@ -97,31 +119,32 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ", databaseError.toException());
+                Log.e(TAG, "onDailyQuotesCancelled: ", databaseError.toException());
             }
         };
         DailyQuotesDatabaseReference.addValueEventListener(valueEventListener);
-
     }
 
     void getAuthorsFromFirebase() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren())
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     authorNameList.add(child.getKey());
-                Log.i(TAG, "onDataChange: No of authors fetched " + dataSnapshot.getChildrenCount());
+//                    Log.i(TAG, "onAuthorsDataChange: " + child.getKey());
+                }
+                Log.i(TAG, "onAuthorsDataChange: No of authors fetched " + dataSnapshot.getChildrenCount());
 
                 Intent sendAuthorsList = new Intent(SplashActivity.this, GridActivity.class);
                 sendAuthorsList.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
                 sendAuthorsList.putStringArrayListExtra(Constants.DAILY_QUOTES, dailyQuotesList);
                 startActivity(sendAuthorsList);
-                Log.i(TAG, "onDataChange: Got author names");
+                Log.i(TAG, "onAuthorsDataChange: Got author names");
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ", databaseError.toException());
+                Log.e(TAG, "onAuthorsCancelled: ", databaseError.toException());
             }
         };
         AuthorDatabaseReference.addListenerForSingleValueEvent(valueEventListener);

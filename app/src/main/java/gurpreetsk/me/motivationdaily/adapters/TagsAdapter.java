@@ -35,41 +35,40 @@ import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.activities.AuthorsActivity;
 import gurpreetsk.me.motivationdaily.activities.GridActivity;
 import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
+import gurpreetsk.me.motivationdaily.models.TagsQuotes;
 import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
- * Created by Gurpreet on 25/12/16.
+ * Created by Gurpreet on 30/12/16.
  */
 
-public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHolder> {
+public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> {
 
-    private ArrayList<String> authorList = new ArrayList<>();
-    private Context context;
+    Context context;
+    ArrayList<String> tagsList;
     private int color;
-    private ArrayList<String> authorQuotes = new ArrayList<>();
-    private static final String TAG = "AuthorAdapter";
+    private static final String TAG = "TagsAdapter";
+    private ArrayList<TagsQuotes> tagQuotes = new ArrayList<>();
 
 
-    public AuthorAdapter(Context context, ArrayList<String> authorList) {
+    public TagsAdapter(Context context, ArrayList<String> tagsList) {
         this.context = context;
-        this.authorList = authorList;
+        this.tagsList = tagsList;
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_grid_element, parent, false);
-        return new MyViewHolder(v);
+        return new TagsAdapter.MyViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.TV_authorName.setText(authorList.get(position));
+        holder.TV_authorName.setText(tagsList.get(position));
 
         Glide.with(context)
-                .load(AuthorImageUrl.getAuthorImage(authorList.get(position)))
+                .load(AuthorImageUrl.getAuthorImage(tagsList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -94,30 +93,32 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getQuotesFromFirebase(authorList.get(holder.getAdapterPosition()), holder);
+                getTagsFromFirebase(tagsList.get(holder.getAdapterPosition()), holder);
             }
         });
-
     }
 
+    private void getTagsFromFirebase(String tagName, final MyViewHolder holder) {
 
-    private void getQuotesFromFirebase(final String authorName, final MyViewHolder holder) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("authors").child(authorName);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("tags").child(tagName);
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (authorQuotes != null)
-                    authorQuotes.clear();
-                for (DataSnapshot child : dataSnapshot.getChildren())
-                    authorQuotes.add(child.child("Quote").getValue().toString());
+                if (tagQuotes != null)
+                    tagQuotes.clear();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    TagsQuotes quotes = dataSnapshot.getValue(TagsQuotes.class);
+                    Log.i(TAG, "onDataChange: quote "+quotes.quote);
+                    tagQuotes.add(quotes);
+                }
 
-                Intent sendAuthorsList = new Intent(context, QuoteListActivity.class);
-                sendAuthorsList.putStringArrayListExtra(Constants.QUOTES_KEY, authorQuotes);
-                sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
-                sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
+                Intent sendTagsList = new Intent(context, QuoteListActivity.class);
+                sendTagsList.putExtra(Constants.QUOTES_KEY, tagQuotes);
+                sendTagsList.putExtra(Constants.MUTED_COLOR, color);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (!QuoteListActivity.mTwoPane) {
                         ActivityOptionsCompat options;
+                        //TODO: change this
                         try {
                             options = ActivityOptionsCompat.
                                     makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
@@ -126,11 +127,11 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                             options = ActivityOptionsCompat.
                                     makeSceneTransitionAnimation((AuthorsActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
                         }
-                        context.startActivity(sendAuthorsList, options.toBundle());
+                        context.startActivity(sendTagsList, options.toBundle());
                     } else
-                        context.startActivity(sendAuthorsList);
+                        context.startActivity(sendTagsList);
                 } else
-                    context.startActivity(sendAuthorsList);
+                    context.startActivity(sendTagsList);
                 Log.i(TAG, "onDataChange: Got author quotes, Started QuoteListActivity");
             }
             @Override
@@ -139,14 +140,13 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
             }
         };
         databaseReference.addValueEventListener(valueEventListener);
-    }
 
+    }
 
     @Override
     public int getItemCount() {
-        return authorList.size();
+        return tagsList.size();
     }
-
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -162,5 +162,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
             ButterKnife.bind(this, itemView);
         }
     }
+
 
 }

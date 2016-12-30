@@ -17,11 +17,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
-import gurpreetsk.me.motivationdaily.adapters.AuthorAdapter;
 import gurpreetsk.me.motivationdaily.adapters.DailyQuotePagerAdapter;
 import gurpreetsk.me.motivationdaily.fragments.GridFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
-import gurpreetsk.me.motivationdaily.utils.DepthPageTransformer;
 
 public class GridActivity extends AppCompatActivity {
 
