@@ -49,16 +49,19 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
     private ArrayList<String> authorQuotes = new ArrayList<>();
     private static final String TAG = "AuthorAdapter";
 
+
     public AuthorAdapter(Context context, ArrayList<String> authorList) {
         this.context = context;
         this.authorList = authorList;
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_grid_element, parent, false);
         return new MyViewHolder(v);
     }
+
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
@@ -68,7 +71,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         Glide.with(context)
                 .load(AuthorImageUrl.getAuthorImage(authorList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .dontAnimate()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -98,15 +100,16 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
     }
 
+
 //    @Override
 //    public int getItemViewType(int position) {
 //        super.getItemViewType(position);
 //        //TODO: make first card big, denote it with quote of the day
 //    }
 
+
     private void getQuotesFromFirebase(final String authorName, final MyViewHolder holder) {
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference().child(authorName);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("authors").child(authorName);
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,7 +133,6 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                     context.startActivity(sendAuthorsList);
                 Log.i(TAG, "onDataChange: Got author quotes, Started QuoteListActivity");
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
@@ -139,10 +141,12 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         databaseReference.addValueEventListener(valueEventListener);
     }
 
+
     @Override
     public int getItemCount() {
         return authorList.size();
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 

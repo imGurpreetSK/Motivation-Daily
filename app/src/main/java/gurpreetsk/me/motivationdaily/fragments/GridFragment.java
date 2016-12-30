@@ -34,9 +34,9 @@ public class GridFragment extends Fragment {
     ArrayList<String> authorNameList;
     RecyclerView.LayoutManager gridLayoutManager;
     public static final int PORTRAIT_LESS_NO_OF_COLUMNS = 1;
-    public static final int PORTRAIT_MORE_NO_OF_COLUMNS = 4;
-    public static final int LANDSCAPE_LESS_NO_OF_COLUMNS = 4;
-    public static final int LANDSCAPE_MORE_NO_OF_COLUMNS = 5;
+    public static final int PORTRAIT_MORE_NO_OF_COLUMNS = 1;
+    public static final int LANDSCAPE_LESS_NO_OF_COLUMNS = 1;
+    public static final int LANDSCAPE_MORE_NO_OF_COLUMNS = 1;
 
 
     public GridFragment() {}

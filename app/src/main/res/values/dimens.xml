@@ -12,4 +12,5 @@
     <dimen name="appbar_layout_dimension">300dp</dimen>
     <dimen name="no_quotes_text_size">16sp</dimen>
     <dimen name="daily_quote_text_size">18sp</dimen>
+    <dimen name="heading_text_size">18sp</dimen>
 </resources>

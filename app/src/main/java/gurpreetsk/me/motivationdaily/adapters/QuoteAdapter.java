@@ -61,7 +61,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.TV_quote.setText(quotes.get(position));
         //TODO: save in DB and create view for viewing bookmarked quotes
         ArrayList<String> idList = queryFavourites();
@@ -77,7 +77,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
                 try {
                     context.getContentResolver().insert(QuotesTable.CONTENT_URI, QuotesTable.getContentValues(databaseInstance, false));
                     likeButton.setLiked(true);
-                    Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
 //                    Log.e(TAG, "liked: ", e);
                     FirebaseCrash.log("Couldn't insert in database");
@@ -89,7 +89,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
                 try {
                     context.getContentResolver().delete(QuotesTable.CONTENT_URI, TableStructure.COLUMN_QUOTE + " = ?", new String[]{quotes.get(holder.getAdapterPosition())});
                     likeButton.setLiked(false);
-                    Toast.makeText(context, "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Deleted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Log.e(TAG, "unLiked: ", e);
                     FirebaseCrash.log("Couldn't delete from database");
@@ -100,7 +100,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
             @Override
             public void onClick(View view) {
                 //Handles data transfer on different devices
-                ((QuoteListFragment.Callback) context).OnItemSelected(quotes, author, position);
+                ((QuoteListFragment.Callback) context).OnItemSelected(quotes, author, holder.getAdapterPosition());
             }
         });
     }

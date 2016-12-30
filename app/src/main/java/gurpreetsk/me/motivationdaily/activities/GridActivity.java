@@ -1,6 +1,5 @@
 package gurpreetsk.me.motivationdaily.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,14 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +33,10 @@ public class GridActivity extends AppCompatActivity {
     TextView TV_AuthorDailyQuote;
 
     private static final String TAG = "GridActivity";
-    String[] data ;
+    //    String[] data ;
+    ArrayList<String> authorsList;
+    ArrayList<String> dailyQuotesList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,8 @@ public class GridActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        try {
-            data = new QuoteAsyncTask().execute().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        TV_DailyQuote.setText(data[0]);
-        TV_AuthorDailyQuote.setText(data[1]);
-
-        ArrayList<String> authorsList = getIntent().getStringArrayListExtra(Constants.AUTHORS_KEY);
+        authorsList = getIntent().getStringArrayListExtra(Constants.AUTHORS_KEY);
+        dailyQuotesList = getIntent().getStringArrayListExtra(Constants.DAILY_QUOTES);
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(Constants.AUTHORS_KEY, authorsList);
         GridFragment gridFragment = new GridFragment();
@@ -81,21 +75,34 @@ public class GridActivity extends AppCompatActivity {
     }
 
 
-    private class QuoteAsyncTask extends AsyncTask<String, Void, String[]> {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putStringArray(Constants.DAILY_QUOTES, data);
+//        outState.putStringArrayList(Constants.QUOTES_KEY, authorsList);
+    }
+
+    private class QuoteAsyncTask extends AsyncTask<Void, Void, String[]> {
 
         @Override
-        protected String[] doInBackground(String... strings) {
+        protected String[] doInBackground(Void... voids) {
             String[] data = new String[2];
+//            ArrayList<DailyQuotes> data = new ArrayList<>();
             try {
                 Document doc = Jsoup.connect("https://www.brainyquote.com/quotes_of_the_day.html").get();
                 data[0] = doc.select("span.bqQuoteLink a").first().html();
                 data[1] = doc.select("div.bq-aut a").first().html();
-//                Log.i(TAG, "doInBackground: " + quote + " " + authorName);
+//                data[2] = doc.select("span.bqQuoteLink a").html();
+//                data[3] = doc.select("div.bq-aut a").first().html();
+//                data[4] = doc.select("span.bqQuoteLink a").first().html();
+//                data[5] = doc.select("div.bq-aut a").first().html();
+                Log.i(TAG, "doInBackground: " + Arrays.toString(data));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return data;
         }
+
     }
 
 }

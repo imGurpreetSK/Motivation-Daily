@@ -31,8 +31,13 @@ public class SplashActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
+    DatabaseReference DailyQuotesDatabaseReference;
+    DatabaseReference AuthorDatabaseReference;
+
 
     ArrayList<String> authorNameList = new ArrayList<>();
+    ArrayList<String> dailyQuotesList = new ArrayList<>();
+
     Boolean isFirstRun;
     SharedPreferences preferences;
 
@@ -60,11 +65,16 @@ public class SplashActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         try {
             database.setPersistenceEnabled(true);   //TODO: Crash here
-        }catch (Exception e){
+        } catch (Exception e) {
             FirebaseCrash.report(e);
         }
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.keepSynced(true);
+        AuthorDatabaseReference = databaseReference.child("authors");
+        AuthorDatabaseReference.limitToFirst(5);
+        AuthorDatabaseReference.keepSynced(true);
+        DailyQuotesDatabaseReference = databaseReference.child("daily_quotes");
+        DailyQuotesDatabaseReference.limitToFirst(5);
+        DailyQuotesDatabaseReference.keepSynced(true);
 
         //TODO: CHECK FOR INTERNET CONNECTIVITY ON FIRST RUN
 
@@ -78,9 +88,34 @@ public class SplashActivity extends AppCompatActivity {
 //            Snackbar.make(findViewById(R.id.activity_splash), getString(R.string.firstRunInternetNeeded), Snackbar.LENGTH_INDEFINITE);
 //            Toast.makeText(this, getString(R.string.firstRunInternetNeeded), Toast.LENGTH_SHORT).show();
 //        else {
-            getAuthorsFromFirebase();
+        getDailyQuotes();
+        getAuthorsFromFirebase();
+
 //            preferences.edit().putBoolean(getString(R.string.isFirstRun), false).apply();
 //        }
+    }
+
+    private void getDailyQuotes() {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren())
+                    dailyQuotesList.add(child.getValue().toString());
+
+
+//                Intent sendAuthorsList = new Intent(SplashActivity.this, GridActivity.class);
+//                sendAuthorsList.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
+//                startActivity(sendAuthorsList);
+//                Log.i(TAG, "onDataChange: Got Daily quotes");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ", databaseError.toException());
+            }
+        };
+        DailyQuotesDatabaseReference.addValueEventListener(valueEventListener);
+
     }
 
     void getAuthorsFromFirebase() {
@@ -89,11 +124,13 @@ public class SplashActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren())
                     authorNameList.add(child.getKey());
+                Log.i(TAG, "onDataChange: No of authors fetched " + dataSnapshot.getChildrenCount());
 
                 Intent sendAuthorsList = new Intent(SplashActivity.this, GridActivity.class);
                 sendAuthorsList.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
+                sendAuthorsList.putStringArrayListExtra(Constants.DAILY_QUOTES, dailyQuotesList);
                 startActivity(sendAuthorsList);
-                Log.i(TAG, "onDataChange: Got author names, Started GridActivity");
+                Log.i(TAG, "onDataChange: Got author names");
             }
 
             @Override
@@ -101,7 +138,7 @@ public class SplashActivity extends AppCompatActivity {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
             }
         };
-        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+        AuthorDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
     @Override
