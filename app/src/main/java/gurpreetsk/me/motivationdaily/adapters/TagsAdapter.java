@@ -2,10 +2,6 @@ package gurpreetsk.me.motivationdaily.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Build;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,12 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,11 +22,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
-import gurpreetsk.me.motivationdaily.activities.AuthorsActivity;
-import gurpreetsk.me.motivationdaily.activities.GridActivity;
 import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
-import gurpreetsk.me.motivationdaily.models.TagsQuotes;
-import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
@@ -45,11 +31,11 @@ import gurpreetsk.me.motivationdaily.utils.Constants;
 
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<String> tagsList;
+    private Context context;
+    private ArrayList<String> tagsList;
     private int color;
     private static final String TAG = "TagsAdapter";
-    private ArrayList<TagsQuotes> tagQuotes = new ArrayList<>();
+    private ArrayList<String> tagQuotes = new ArrayList<>();
 
 
     public TagsAdapter(Context context, ArrayList<String> tagsList) {
@@ -65,30 +51,31 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.TV_authorName.setText(tagsList.get(position));
+        holder.TV_authorName.setText(tagsList.get(position)); //TODO: remove this and add images
+        holder.TV_authorName.setTextColor(context.getResources().getColor(R.color.primaryText));
 
-        Glide.with(context)
-                .load(AuthorImageUrl.getAuthorImage(tagsList.get(position)))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model,
-                                                   Target<GlideDrawable> target,
-                                                   boolean isFromMemoryCache, boolean isFirstResource) {
-                        Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
-                        Palette palette = Palette.generate(bitmap);
-                        int defaultColor = 0xFF333333;
-                        color = palette.getMutedColor(defaultColor);
-                        holder.TV_authorName.setBackgroundColor(color);
-                        return false;
-                    }
-                })
-                .into(holder.IV_authorImage);
+//        Glide.with(context)
+//                .load(AuthorImageUrl.getAuthorImage(tagsList.get(position)))
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .listener(new RequestListener<String, GlideDrawable>() {
+//                    @Override
+//                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(GlideDrawable resource, String model,
+//                                                   Target<GlideDrawable> target,
+//                                                   boolean isFromMemoryCache, boolean isFirstResource) {
+//                        Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
+//                        Palette palette = Palette.generate(bitmap);
+//                        int defaultColor = 0xFF333333;
+//                        color = palette.getMutedColor(defaultColor);
+//                        holder.TV_authorName.setBackgroundColor(color);
+//                        return false;
+//                    }
+//                })
+//                .into(holder.IV_authorImage);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +85,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
         });
     }
 
-    private void getTagsFromFirebase(String tagName, final MyViewHolder holder) {
+    private void getTagsFromFirebase(final String tagName, final MyViewHolder holder) {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("tags").child(tagName);
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -107,33 +94,19 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
                 if (tagQuotes != null)
                     tagQuotes.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    TagsQuotes quotes = dataSnapshot.getValue(TagsQuotes.class);
-                    Log.i(TAG, "onDataChange: quote "+quotes.quote);
-                    tagQuotes.add(quotes);
+                    tagQuotes.add(child.getValue().toString());
+                    Log.i(TAG, "onDataChange: " + child.getValue().toString());
                 }
-
+                //TODO: find a way to parse the quote and author and show them on view
                 Intent sendTagsList = new Intent(context, QuoteListActivity.class);
-                sendTagsList.putExtra(Constants.QUOTES_KEY, tagQuotes);
+                sendTagsList.putExtra(Constants.SENDER_KEY, "Tags");
+                sendTagsList.putExtra(Constants.TAGS_QUOTES, tagQuotes);
+                sendTagsList.putExtra(Constants.TAG_CATEGORY, tagName);
                 sendTagsList.putExtra(Constants.MUTED_COLOR, color);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    if (!QuoteListActivity.mTwoPane) {
-                        ActivityOptionsCompat options;
-                        //TODO: change this
-                        try {
-                            options = ActivityOptionsCompat.
-                                    makeSceneTransitionAnimation((GridActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            options = ActivityOptionsCompat.
-                                    makeSceneTransitionAnimation((AuthorsActivity) context, holder.IV_authorImage, context.getString(R.string.authorimage_transition));
-                        }
-                        context.startActivity(sendTagsList, options.toBundle());
-                    } else
-                        context.startActivity(sendTagsList);
-                } else
-                    context.startActivity(sendTagsList);
+                context.startActivity(sendTagsList);
                 Log.i(TAG, "onDataChange: Got author quotes, Started QuoteListActivity");
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());

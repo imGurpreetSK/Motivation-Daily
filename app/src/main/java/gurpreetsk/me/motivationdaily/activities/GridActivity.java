@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.adapters.DailyQuotePagerAdapter;
 import gurpreetsk.me.motivationdaily.fragments.GridFragment;
+import gurpreetsk.me.motivationdaily.fragments.TagsFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
 public class GridActivity extends AppCompatActivity {
@@ -30,12 +31,17 @@ public class GridActivity extends AppCompatActivity {
     @BindView(R.id.authors_list_textview)
     TextView TV_AllAuthors;
     @BindView(R.id.view_all_textview)
-    TextView TV_ViewAll;
+    TextView TV_ViewAllAuthors;
+    @BindView(R.id.tags_list_textview)
+    TextView TV_AllTags;
+    @BindView(R.id.view_all_tags_textview)
+    TextView TV_ViewAllTags;
 
 
     private static final String TAG = "GridActivity";
     //    String[] data ;
     ArrayList<String> authorsList;
+    ArrayList<String> tagsList;
     ArrayList<String> dailyQuotesList;
 
 
@@ -48,6 +54,7 @@ public class GridActivity extends AppCompatActivity {
 
         authorsList = getIntent().getStringArrayListExtra(Constants.AUTHORS_KEY);
         dailyQuotesList = getIntent().getStringArrayListExtra(Constants.DAILY_QUOTES);
+        tagsList = getIntent().getStringArrayListExtra(Constants.TAGS_CATEGORIES);
 
         TV_AllAuthors.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +64,7 @@ public class GridActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        TV_ViewAll.setOnClickListener(new View.OnClickListener() {
+        TV_ViewAllAuthors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
@@ -65,18 +72,43 @@ public class GridActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList(Constants.AUTHORS_KEY, authorsList);
-        GridFragment gridFragment = new GridFragment();
-        gridFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_grid_fragment_container, gridFragment).commit();
+        TV_AllTags.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
+                intent.putStringArrayListExtra(Constants.AUTHORS_KEY, tagsList);
+                startActivity(intent);
+            }
+        });
+        TV_ViewAllTags.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GridActivity.this, AuthorsActivity.class);
+                intent.putStringArrayListExtra(Constants.AUTHORS_KEY, tagsList);
+                startActivity(intent);
+            }
+        });
 
         PagerAdapter pagerAdapter = new DailyQuotePagerAdapter(getSupportFragmentManager(), dailyQuotesList);
         dailyQuoteViewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(dailyQuoteViewPager, true);
+
+        Bundle authorBundle = new Bundle();
+        authorBundle.putStringArrayList(Constants.AUTHORS_KEY, authorsList);
+        GridFragment gridFragment = new GridFragment();
+        gridFragment.setArguments(authorBundle);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_grid_fragment_container, gridFragment).commit();
+
+        Bundle tagsBundle = new Bundle();
+        tagsBundle.putStringArrayList(Constants.TAGS_CATEGORIES, tagsList);
+        TagsFragment tagsFragment = new TagsFragment();
+        tagsFragment.setArguments(tagsBundle);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.tags_main_grid_fragment_container, tagsFragment).commit();
+
+
 //        dailyQuoteViewPager.setPageTransformer(true, new DepthPageTransformer());
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.main_grid_fragment_container2, gridFragment).commit();

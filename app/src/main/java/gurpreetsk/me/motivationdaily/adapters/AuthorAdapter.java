@@ -112,6 +112,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                     authorQuotes.add(child.child("Quote").getValue().toString());
 
                 Intent sendAuthorsList = new Intent(context, QuoteListActivity.class);
+                sendAuthorsList.putExtra(Constants.SENDER_KEY, "Author");
                 sendAuthorsList.putStringArrayListExtra(Constants.QUOTES_KEY, authorQuotes);
                 sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
                 sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);

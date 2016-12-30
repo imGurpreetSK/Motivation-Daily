@@ -14,5 +14,9 @@ public class Constants {
     public static final String MUTED_COLOR = "MutedColor";
     public static final String POSITION= "Position";
     public static final String DAILY_QUOTES = "DailyQuotes";
+    public static final String TAGS_CATEGORIES = "TagsCategories";
+    public static final String TAGS_QUOTES = "TagsQuotes";
+    public static final String SENDER_KEY = "SenderName";
+    public static final String TAG_CATEGORY = "Category of tag";
 
 }

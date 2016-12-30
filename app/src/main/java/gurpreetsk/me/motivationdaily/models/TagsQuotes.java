@@ -9,27 +9,37 @@ import android.os.Parcelable;
 
 public class TagsQuotes implements Parcelable {
 
-    public String authorName;
-    public String quote;
+    public String AuthorName;
+    public String Quote;
 
-    public TagsQuotes(String authorName, String quote) {
-        this.authorName = authorName;
-        this.quote = quote;
+    public TagsQuotes() {}
+
+    public TagsQuotes(String AuthorName, String Quote) {
+        this.AuthorName = AuthorName;
+        this.Quote = Quote;
     }
 
     public String getAuthorName() {
-        return authorName;
+        return AuthorName;
+    }
+
+    public void setAuthorName(String AuthorName) {
+        this.AuthorName = AuthorName;
     }
 
     public String getQuote() {
-        return quote;
+        return Quote;
+    }
+
+    public void setQuote(String Quote) {
+        this.Quote = Quote;
     }
 
     public TagsQuotes(Parcel in) {
         String[] data = new String[2];
         in.readStringArray(data);
-        this.authorName = data[0];
-        this.quote = data[1];
+        this.AuthorName = data[0];
+        this.Quote = data[1];
     }
 
     public int describeContents() {
@@ -38,8 +48,8 @@ public class TagsQuotes implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{this.authorName
-                , this.quote});
+        dest.writeStringArray(new String[]{this.AuthorName
+                , this.Quote});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

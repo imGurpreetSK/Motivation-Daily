@@ -96,7 +96,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    tagsNameList.add(child.toString());
+                    tagsNameList.add(child.getKey());
 //                    Log.i(TAG, "onTagsDataChange: " + child.getKey());
                 }
             }
@@ -135,10 +135,11 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 Log.i(TAG, "onAuthorsDataChange: No of authors fetched " + dataSnapshot.getChildrenCount());
 
-                Intent sendAuthorsList = new Intent(SplashActivity.this, GridActivity.class);
-                sendAuthorsList.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
-                sendAuthorsList.putStringArrayListExtra(Constants.DAILY_QUOTES, dailyQuotesList);
-                startActivity(sendAuthorsList);
+                Intent sendLists = new Intent(SplashActivity.this, GridActivity.class);
+                sendLists.putStringArrayListExtra(Constants.AUTHORS_KEY, authorNameList);
+                sendLists.putStringArrayListExtra(Constants.DAILY_QUOTES, dailyQuotesList);
+                sendLists.putStringArrayListExtra(Constants.TAGS_CATEGORIES, tagsNameList);
+                startActivity(sendLists);
                 Log.i(TAG, "onAuthorsDataChange: Got author names");
             }
 

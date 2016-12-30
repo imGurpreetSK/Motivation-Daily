@@ -43,41 +43,63 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quote_list);
-        ButterKnife.bind(this);
 
         //TODO:NPE because of this
 //        if(getSupportActionBar()!=null)
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String sender = getIntent().getStringExtra(Constants.SENDER_KEY);
+
+        if (sender.equals("Author")) {
+            setContentView(R.layout.activity_quote_list);
+            ButterKnife.bind(this);
+        } else if (sender.equals("Tags")) {
+            setContentView(R.layout.activity_tags_list);
+            ButterKnife.bind(this);
+        }
+
         mTwoPane = findViewById(R.id.two_pane_view) != null;
         String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
+        String tag = getIntent().getStringExtra(Constants.TAG_CATEGORY);
 
-        if (!mTwoPane) {
+        if (!mTwoPane && sender.equals("Author")) {
             collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
             authorImage = (ImageView) findViewById(R.id.detail_image_view);
-
-
             collapsingToolbarLayout.setTitle(authorName);
-//        collapsingToolbarLayout.setcolor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary)));
             Glide.with(this)
                     .load(AuthorImageUrl.getAuthorImage(authorName))
                     .into(authorImage);
-        }
-
-        if (mTwoPane) {
+        } else if (!mTwoPane && sender.equals("Tags")) {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(tag);
+        } else if (mTwoPane && sender.equals("Author")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setTitle(authorName);
         }
+        else if(mTwoPane && sender.equals("Tags")){
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(tag);
+        }
 
         Bundle bundle = new Bundle();
-        bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
-        bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
-        QuoteListFragment quoteListFragment = new QuoteListFragment();
-        quoteListFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.quote_list_container, quoteListFragment)
-                .commit();
+
+        if (sender.equals("Author")) {
+            bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
+            bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
+            QuoteListFragment quoteListFragment = new QuoteListFragment();
+            quoteListFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.quote_list_container, quoteListFragment)
+                    .commit();
+        } else if (sender.equals("Tags")) {
+            bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.TAGS_QUOTES));
+            bundle.putString(Constants.AUTHOR_NAME_KEY, tag);
+            QuoteListFragment quoteListFragment = new QuoteListFragment();
+            quoteListFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.tags_quote_list_container, quoteListFragment)
+                    .commit();
+        }
 
     }
 
