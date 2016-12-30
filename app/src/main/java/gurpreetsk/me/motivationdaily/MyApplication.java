@@ -1,6 +1,7 @@
 package gurpreetsk.me.motivationdaily;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
@@ -20,6 +21,7 @@ public class MyApplication extends Application {
         }
         LeakCanary.install(this);
         Stetho.initializeWithDefaults(this);
+        Toast.makeText(this, "MyApplication.java", Toast.LENGTH_SHORT).show();
     }
 
 }

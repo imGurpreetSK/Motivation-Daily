@@ -1,7 +1,24 @@
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/favorites_recyclerview"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/activity_margin_medium"
-    android:layout_marginRight="@dimen/activity_margin_medium"
-    android:layout_marginTop="@dimen/activity_margin_medium" />
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/favorites_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_margin_medium"
+        android:layout_marginRight="@dimen/activity_margin_medium"
+        android:layout_marginTop="@dimen/activity_margin_medium" />
+
+    <TextView
+        android:id="@+id/no_data_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_favorites_found"
+        android:textSize="@dimen/no_quotes_text_size"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</FrameLayout>

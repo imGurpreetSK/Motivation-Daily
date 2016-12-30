@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ public class FavoritesListFragment extends Fragment {
 
     @BindView(R.id.favorites_recyclerview)
     RecyclerView favoritesRecyclerView;
+    @BindView(R.id.no_data_textview)
+    TextView TV_noData;
 
 
     public FavoritesListFragment() {}
@@ -42,11 +45,18 @@ public class FavoritesListFragment extends Fragment {
         ButterKnife.bind(this, v);
 
         ArrayList<String> favorites = getArguments().getStringArrayList("ArrayList");
-        FavoritesAdapter favoritesAdapter = new FavoritesAdapter(getContext(), favorites);
-        favoritesRecyclerView.setAdapter(favoritesAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        favoritesRecyclerView.setLayoutManager(layoutManager);
-//        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+
+        if (favorites != null && !favorites.isEmpty()) {
+            FavoritesAdapter favoritesAdapter = new FavoritesAdapter(getContext(), favorites);
+            favoritesRecyclerView.setAdapter(favoritesAdapter);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            favoritesRecyclerView.setLayoutManager(layoutManager);
+            //        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+            TV_noData.setVisibility(View.GONE);
+        } else{
+            TV_noData.setVisibility(View.VISIBLE);
+            favoritesRecyclerView.setVisibility(View.GONE);
+        }
 
         return v;
     }

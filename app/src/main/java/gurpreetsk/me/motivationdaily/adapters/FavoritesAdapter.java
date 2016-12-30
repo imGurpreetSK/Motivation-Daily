@@ -72,7 +72,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MyVi
 //                Toast.makeText(context, "Inserted quote: " + favorites.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 
