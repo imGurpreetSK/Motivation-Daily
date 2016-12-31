@@ -62,7 +62,12 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.TV_quote.setText(quotes.get(position));
+
+        String quote = quotes.get(position);
+
+        quote = quote.replace("{Quote=", "").replace(".,", ".").replace("Author=", "\n-").replace("}", "");
+
+        holder.TV_quote.setText(quote);
         //TODO: save in DB and create view for viewing bookmarked quotes
         ArrayList<String> idList = queryFavourites();
         if (idList.contains(quotes.get(holder.getAdapterPosition())))

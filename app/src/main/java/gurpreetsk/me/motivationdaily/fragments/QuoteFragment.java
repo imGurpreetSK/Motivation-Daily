@@ -23,7 +23,8 @@ public class QuoteFragment extends Fragment {
     TextView TV_quote;
 
 
-    public QuoteFragment() {}
+    public QuoteFragment() {
+    }
 
 
     @Override
@@ -33,6 +34,8 @@ public class QuoteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_quote, container, false);
         ButterKnife.bind(this, v);
         String quote = getArguments().getString(Constants.QUOTE_KEY);
+        if (quote != null)
+            quote = quote.replace("{Quote=", "").replace(".,", ".").replace("Author=", "\n\n-").replace("}", "");
         TV_quote.setText(quote);
         return v;
 
