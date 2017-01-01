@@ -14,4 +14,5 @@
     <dimen name="daily_quote_text_size">18sp</dimen>
     <dimen name="heading_text_size">18sp</dimen>
     <dimen name="view_all_text_size">14sp</dimen>
+    <dimen name="activity_margin_micro">1dp</dimen>
 </resources>

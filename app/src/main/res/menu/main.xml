@@ -2,10 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/ic_favorites"
+    <item
+        android:id="@+id/ic_favorites"
+        android:icon="@drawable/ic_bookmarked"
         android:orderInCategory="1"
         android:title="@string/favorites"
-        android:icon="@drawable/ic_bookmarked"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:icon="@drawable/ic_share"
+        android:orderInCategory="2"
+        android:title="@string/ic_share"
+        android:id="@+id/share_action"
         app:showAsAction="ifRoom" />
 
     <item

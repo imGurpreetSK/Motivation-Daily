@@ -15,4 +15,9 @@
     <string name="favorites">Favourites</string>
     <string name="no_favorites_found">Boo!\nNo favorites added\nAdd by clicking on bookmark icon next to the quote :D</string>
     <string name="view_all"><![CDATA[View all>]]></string>
+    <string name="ic_share">Share</string>
+    <string name="share_app_intent">Check out Motivaton Daily on play store! \"LINK\"</string>
+    <string name="share_via">Share via</string>
+    <string name="all_authors">All Authors</string>
+    <string name="all_tags">Categories</string>
 </resources>

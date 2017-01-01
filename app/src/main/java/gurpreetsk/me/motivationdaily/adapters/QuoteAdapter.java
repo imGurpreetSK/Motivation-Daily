@@ -1,12 +1,7 @@
 package gurpreetsk.me.motivationdaily.adapters;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.like.LikeButton;
@@ -26,14 +20,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
-import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
-import gurpreetsk.me.motivationdaily.activities.QuoteViewActivity;
 import gurpreetsk.me.motivationdaily.data.Database;
 import gurpreetsk.me.motivationdaily.data.QuotesTable;
 import gurpreetsk.me.motivationdaily.data.TableStructure;
 import gurpreetsk.me.motivationdaily.fragments.QuoteListFragment;
-import gurpreetsk.me.motivationdaily.models.Quote;
-import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
  * Created by Gurpreet on 26/12/16.
@@ -109,11 +99,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
             }
         });
     }
-
-//    @Override
-//    public int getItemViewType(int position) {
-//        return (position==0?);
-//    }
 
     private ArrayList<String> queryFavourites() {
         Cursor c = context.getContentResolver().query(QuotesTable.CONTENT_URI, null, null, null, null);

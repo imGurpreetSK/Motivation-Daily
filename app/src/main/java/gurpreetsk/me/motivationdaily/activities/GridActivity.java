@@ -3,9 +3,11 @@ package gurpreetsk.me.motivationdaily.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,7 +120,7 @@ public class GridActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -127,6 +129,13 @@ public class GridActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.ic_favorites:
                 startActivity(new Intent(this, FavoritesActivity.class));
+                break;
+            case R.id.share_action:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_intent));
+                startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
         }
         return true;
     }

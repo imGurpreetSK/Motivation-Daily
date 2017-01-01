@@ -1,5 +1,6 @@
 package gurpreetsk.me.motivationdaily.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -40,6 +43,7 @@ public class TagsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tags);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        setTitle(getString(R.string.all_tags));
 
         tagsList = getIntent().getStringArrayListExtra(Constants.TAGS_CATEGORIES);
 
@@ -63,4 +67,28 @@ public class TagsActivity extends AppCompatActivity {
         recyclerView.setAdapter(gridAdapter);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ic_favorites:
+                startActivity(new Intent(this, FavoritesActivity.class));
+                break;
+            case R.id.share_action:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_intent));
+                startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
+        }
+        return true;
+    }
+
 }
