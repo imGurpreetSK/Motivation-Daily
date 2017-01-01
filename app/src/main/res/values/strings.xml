@@ -20,4 +20,5 @@
     <string name="share_via">Share via</string>
     <string name="all_authors">All Authors</string>
     <string name="all_tags">Categories</string>
+    <string name="icon_description">Discription of app icon</string>
 </resources>

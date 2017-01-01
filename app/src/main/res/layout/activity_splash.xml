@@ -8,15 +8,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/lightPrimary"
     tools:context="gurpreetsk.me.motivationdaily.activities.SplashActivity">
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/web_hi_res_512"
+        android:id="@+id/imageView"
+        android:contentDescription="@string/icon_description"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SPLASH SCREEN"
-        android:textSize="24sp"
-        android:id="@+id/splash_textview"
-        android:layout_centerVertical="true"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:textColor="@color/primaryText"
+        android:id="@+id/textView"
+        android:fontFamily="sans-serif-smallcaps"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

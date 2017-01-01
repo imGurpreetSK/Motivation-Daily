@@ -41,9 +41,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG = "SplashActivity";
 
-    @BindView(R.id.splash_textview)
-    TextView TV_authorNames;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -72,6 +72,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         Glide.with(context)
                 .load(ImageUrl.getAuthorImage(authorList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.ic_error)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
