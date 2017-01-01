@@ -33,8 +33,7 @@
             android:id="@+id/quote_fragment_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:background="@color/colorBackground" />
+            android:layout_weight="0.6" />
 
     </LinearLayout>
 
