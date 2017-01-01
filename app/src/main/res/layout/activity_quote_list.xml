@@ -24,13 +24,15 @@
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/detail_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/secondaryText"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/secondaryText"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/toolbar_imageview_content_description"
-                android:scaleType="fitCenter"
                 android:transitionName="@string/authorimage_transition"
                 app:layout_collapseMode="parallax" />
 

@@ -4,10 +4,9 @@ package gurpreetsk.me.motivationdaily.utils;
  * Created by Gurpreet on 27/12/16.
  */
 
-public class AuthorImageUrl {
+public class ImageUrl {
 
     /**
-     *
      * @param authorName
      * @return url to image
      * P.S. Please don't judge for this hack, couldn't find a good API :P
@@ -183,6 +182,34 @@ public class AuthorImageUrl {
 
         return "";
 
+    }
+
+    public static String getTagImage(String tag) {
+        switch (tag) {
+            case "art":
+                return "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ4H8yainNego2VH7bPFY-AboXHIlYZBNVXEyo8k8SErEEwh3jHth_c4mE";
+            case "experience":
+                return "https://www.qualtrics.com/wp-content/uploads/2015/07/CustomerExperienceMaturity.png";
+            case "failure":
+                return "https://i.kinja-img.com/gawker-media/image/upload/s--u79MUgRQ--/c_scale,f_auto,fl_progressive,q_80,w_800/18s40x6wrmxgujpg.jpg";
+            case "friendship":
+                return "https://s-media-cache-ak0.pinimg.com/originals/88/ce/c7/88cec73f55f103a01110b6cb18a29933.jpg";
+            case "god":
+                return "http://cdn.images.express.co.uk/img/dynamic/151/590x/secondary/god-2-463057.jpg";
+            case "learning":
+                return "https://www.hekademia.com/blog/wp-content/uploads/2015/04/xyleme-personalized-learning_0.png";
+            case "life":
+                return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHCECQ1RYZNNHJfs4l8fGBnnnsayVGoFeThe5pB2fwCgJ-0zCYHA";
+            case "love":
+                return "https://image.freepik.com/free-vector/hearts-collection_23-2147512152.jpg";
+            case "motivation":
+                return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQY-apHGac7Bp0N8pUnKe9ni60JW1Pst3dSTxEyuGxammO5_9J";
+            case "success":
+                return "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSWUiIOQoux2MJEwu_Q5xhatFJdo8TJD3H78gl63jyKa7nloZe5-Q";
+            case "wisdom":
+                return "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRUNY_DkTeb5N0GckeVP4xXYeULkyQ69ghDrXalD4--UxRuApir";
+        }
+        return "";
     }
 
 }

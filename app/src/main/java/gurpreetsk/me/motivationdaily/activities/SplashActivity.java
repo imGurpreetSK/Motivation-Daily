@@ -39,15 +39,11 @@ public class SplashActivity extends AppCompatActivity {
     ArrayList<String> dailyQuotesList = new ArrayList<>();
     ArrayList<String> tagsNameList = new ArrayList<>();
 
-    Boolean isFirstRun;
-    SharedPreferences preferences;
-
     private static final String TAG = "SplashActivity";
-
-//    String authors;
 
     @BindView(R.id.splash_textview)
     TextView TV_authorNames;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

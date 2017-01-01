@@ -12,6 +12,7 @@ public class Constants {
     public static final String QUOTE_NUMBER_KEY = "QuoteNumber";
     public static final String AUTHOR_NAME_KEY = "AuthorNameKey";
     public static final String MUTED_COLOR = "MutedColor";
+    public static final String DARK_MUTED_COLOR = "DarkMutedColor";
     public static final String POSITION= "Position";
     public static final String DAILY_QUOTES = "DailyQuotes";
     public static final String TAGS_CATEGORIES = "TagsCategories";

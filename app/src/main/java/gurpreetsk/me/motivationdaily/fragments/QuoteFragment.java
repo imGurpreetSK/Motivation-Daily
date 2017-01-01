@@ -2,6 +2,7 @@ package gurpreetsk.me.motivationdaily.fragments;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,10 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,14 +43,13 @@ public class QuoteFragment extends Fragment {
     TextView TV_quote;
     @BindView(R.id.share_action)
     FloatingActionButton fab;
-    @BindView(R.id.quote_bookmark_button)
-    LikeButton bookmarkButton;
 
     String quote;
     private static final String TAG = "QuoteFragment";
 
 
-    public QuoteFragment() {}
+    public QuoteFragment() {
+    }
 
 
     @Override
@@ -64,40 +68,51 @@ public class QuoteFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, quote);
+                intent.putExtra(Intent.EXTRA_TEXT, quote + "\nSee more on Motivation Daily \n\"LINK\"");
                 startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
             }
         });
-        bookmarkButton.setOnLikeListener(new OnLikeListener() {
+        final ArrayList<String> favList = queryFavourites();
+        if(favList.contains(quote))
+            TV_quote.setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+
+        TV_quote.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void liked(LikeButton likeButton) {
+            public boolean onLongClick(View v) {
                 Database databaseInstance = new Database();
 //                databaseInstance.authorName = author;
                 databaseInstance.quote = quote;
                 try {
-                    getContext().getContentResolver().insert(QuotesTable.CONTENT_URI, QuotesTable.getContentValues(databaseInstance, false));
-                    likeButton.setLiked(true);
-//                    Toast.makeText(getContext(), "Inserted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    if (!favList.contains(quote)) {
+                        getContext().getContentResolver().insert(QuotesTable.CONTENT_URI, QuotesTable.getContentValues(databaseInstance, false));
+                        TV_quote.setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+                        favList.add(quote);
+                        Toast.makeText(getContext(), "Added to favorites!", Toast.LENGTH_SHORT).show();
+                    } else{
+                        getContext().getContentResolver().delete(QuotesTable.CONTENT_URI, TableStructure.COLUMN_QUOTE + " = ?", new String[]{quote});
+                        TV_quote.setTextColor(getContext().getResources().getColor(R.color.secondaryText));
+                        favList.remove(quote);
+                        Toast.makeText(getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (Exception e) {
-//                    Log.e(TAG, "liked: ", e);
                     FirebaseCrash.log("Couldn't insert in database");
                 }
-            }
-
-            @Override
-            public void unLiked(LikeButton likeButton) {
-                try {
-                    getContext().getContentResolver().delete(QuotesTable.CONTENT_URI, TableStructure.COLUMN_QUOTE + " = ?", new String[]{quote});
-                    likeButton.setLiked(false);
-//                    Toast.makeText(getContext(), "Deleted quote: " + quotes.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Log.e(TAG, "unLiked: ", e);
-                    FirebaseCrash.log("Couldn't delete from database");
-                }
+                return true;
             }
         });
         return v;
 
+    }
+
+
+    private ArrayList<String> queryFavourites() {
+        Cursor c = getContext().getContentResolver().query(QuotesTable.CONTENT_URI, null, null, null, null);
+        List<Database> list = QuotesTable.getRows(c, true);     // all rows of database
+        ArrayList<String> idList = new ArrayList<>();
+        for (Database element : list) {
+            idList.add(element.quote);      // add all quotes in arraylist and return
+        }
+        return idList;
     }
 
 

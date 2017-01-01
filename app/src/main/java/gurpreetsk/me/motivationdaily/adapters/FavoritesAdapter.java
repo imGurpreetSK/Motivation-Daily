@@ -1,14 +1,12 @@
 package gurpreetsk.me.motivationdaily.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -18,12 +16,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
-import gurpreetsk.me.motivationdaily.activities.QuoteViewActivity;
 import gurpreetsk.me.motivationdaily.data.QuotesTable;
 import gurpreetsk.me.motivationdaily.data.TableStructure;
 import gurpreetsk.me.motivationdaily.fragments.FavoritesListFragment;
-import gurpreetsk.me.motivationdaily.fragments.QuoteListFragment;
-import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
  * Created by Gurpreet on 28/12/16.

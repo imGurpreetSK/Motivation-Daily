@@ -1,41 +1,37 @@
 package gurpreetsk.me.motivationdaily.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.fragments.QuoteFragment;
 import gurpreetsk.me.motivationdaily.fragments.QuoteListFragment;
-import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
 import gurpreetsk.me.motivationdaily.utils.Constants;
+import gurpreetsk.me.motivationdaily.utils.ImageUrl;
 
 public class QuoteListActivity extends AppCompatActivity implements QuoteListFragment.Callback {
 
-    //    @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    //    @BindView(R.id.detail_image_view)
-    ImageView authorImage;
+    CircleImageView authorImage;
     Toolbar toolbar;
     LinearLayout twoPaneView;
+    int toolbarColor;
 
     public static boolean mTwoPane;
 
@@ -62,23 +58,51 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
         String tag = getIntent().getStringExtra(Constants.TAG_CATEGORY);
 
+        Window window = this.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         if (!mTwoPane && sender.equals("Author")) {
             collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-            authorImage = (ImageView) findViewById(R.id.detail_image_view);
+            authorImage = (CircleImageView) findViewById(R.id.detail_image_view);
             collapsingToolbarLayout.setTitle(authorName);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+            }
+
+            toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.secondaryText));
+            collapsingToolbarLayout.setBackgroundColor(toolbarColor);
+            collapsingToolbarLayout.setContentScrimColor(toolbarColor);
             Glide.with(this)
-                    .load(AuthorImageUrl.getAuthorImage(authorName))
+                    .load(ImageUrl.getAuthorImage(authorName))
                     .into(authorImage);
         } else if (!mTwoPane && sender.equals("Tags")) {
+            toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle(tag);
+            toolbar.setBackgroundColor(toolbarColor);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+            }
+            String Tag = tag.substring(0, 1).toUpperCase() + tag.substring(1);
+            toolbar.setTitle(Tag);
         } else if (mTwoPane && sender.equals("Author")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+            }
             toolbar.setTitle(authorName);
-        }
-        else if(mTwoPane && sender.equals("Tags")){
+        } else if (mTwoPane && sender.equals("Tags")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle(tag);
+            toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+            }
+
+            String Tag = tag.substring(0, 1).toUpperCase() + tag.substring(1);
+            toolbar.setTitle(Tag);
         }
 
         Bundle bundle = new Bundle();
@@ -86,6 +110,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         if (sender.equals("Author")) {
             bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
             bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
+            bundle.putInt(Constants.DARK_MUTED_COLOR, toolbarColor);
             QuoteListFragment quoteListFragment = new QuoteListFragment();
             quoteListFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
@@ -94,6 +119,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         } else if (sender.equals("Tags")) {
             bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.TAGS_QUOTES));
             bundle.putString(Constants.AUTHOR_NAME_KEY, tag);
+            bundle.putInt(Constants.DARK_MUTED_COLOR, toolbarColor);
             QuoteListFragment quoteListFragment = new QuoteListFragment();
             quoteListFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()

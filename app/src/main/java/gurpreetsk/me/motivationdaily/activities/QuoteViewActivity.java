@@ -1,5 +1,6 @@
 package gurpreetsk.me.motivationdaily.activities;
 
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,13 @@ public class QuoteViewActivity extends AppCompatActivity {
 
         quotes = getIntent().getStringArrayListExtra(Constants.QUOTES_KEY);
         quoteNumber = getIntent().getIntExtra(Constants.QUOTE_NUMBER_KEY, 0);
+
+        Window window = this.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+        }
 
         PagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), quotes);
         quotePager.setAdapter(pagerAdapter);

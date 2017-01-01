@@ -35,8 +35,8 @@ import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.activities.AuthorsActivity;
 import gurpreetsk.me.motivationdaily.activities.GridActivity;
 import gurpreetsk.me.motivationdaily.activities.QuoteListActivity;
-import gurpreetsk.me.motivationdaily.utils.AuthorImageUrl;
 import gurpreetsk.me.motivationdaily.utils.Constants;
+import gurpreetsk.me.motivationdaily.utils.ImageUrl;
 
 /**
  * Created by Gurpreet on 25/12/16.
@@ -46,7 +46,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
     private ArrayList<String> authorList = new ArrayList<>();
     private Context context;
-    private int color;
+    private int color, darkColor;
     private ArrayList<String> authorQuotes = new ArrayList<>();
     private static final String TAG = "AuthorAdapter";
 
@@ -69,7 +69,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         holder.TV_authorName.setText(authorList.get(position));
 
         Glide.with(context)
-                .load(AuthorImageUrl.getAuthorImage(authorList.get(position)))
+                .load(ImageUrl.getAuthorImage(authorList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -116,6 +116,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 sendAuthorsList.putStringArrayListExtra(Constants.QUOTES_KEY, authorQuotes);
                 sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
                 sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
+//                sendAuthorsList.putExtra(Constants.DARK_MUTED_COLOR, darkColor);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (!QuoteListActivity.mTwoPane) {
                         ActivityOptionsCompat options;
