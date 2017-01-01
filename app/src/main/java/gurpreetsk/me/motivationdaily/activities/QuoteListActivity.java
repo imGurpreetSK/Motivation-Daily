@@ -57,27 +57,28 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
         String tag = getIntent().getStringExtra(Constants.TAG_CATEGORY);
 
+
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
         if (!mTwoPane && sender.equals("Author")) {
             collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
             authorImage = (CircleImageView) findViewById(R.id.detail_image_view);
             collapsingToolbarLayout.setTitle(authorName);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
             }
-
-            toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.secondaryText));
+            toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             collapsingToolbarLayout.setBackgroundColor(toolbarColor);
             collapsingToolbarLayout.setContentScrimColor(toolbarColor);
             Glide.with(this)
                     .load(ImageUrl.getAuthorImage(authorName))
                     .into(authorImage);
-        } else if (!mTwoPane && sender.equals("Tags")) {
+        }
+        else if (!mTwoPane && sender.equals("Tags")) {
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setBackgroundColor(toolbarColor);
@@ -86,30 +87,32 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             }
             String Tag = tag.substring(0, 1).toUpperCase() + tag.substring(1);
             toolbar.setTitle(Tag);
-        } else if (mTwoPane && sender.equals("Author")) {
+        }
+        else if (mTwoPane && sender.equals("Author")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
             }
             toolbar.setTitle(authorName);
-        } else if (mTwoPane && sender.equals("Tags")) {
+            toolbar.setBackgroundColor(toolbarColor);
+        }
+        else if (mTwoPane && sender.equals("Tags")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
             }
-
             String Tag = tag.substring(0, 1).toUpperCase() + tag.substring(1);
             toolbar.setTitle(Tag);
+            toolbar.setBackgroundColor(toolbarColor);
         }
 
         Bundle bundle = new Bundle();
-
         if (sender.equals("Author")) {
             bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.QUOTES_KEY));
             bundle.putString(Constants.AUTHOR_NAME_KEY, authorName);
-            bundle.putInt(Constants.DARK_MUTED_COLOR, toolbarColor);
+            bundle.putInt(Constants.MUTED_COLOR, toolbarColor);
             QuoteListFragment quoteListFragment = new QuoteListFragment();
             quoteListFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
@@ -118,21 +121,22 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         } else if (sender.equals("Tags")) {
             bundle.putStringArrayList(Constants.QUOTES_KEY, getIntent().getStringArrayListExtra(Constants.TAGS_QUOTES));
             bundle.putString(Constants.AUTHOR_NAME_KEY, tag);
-            bundle.putInt(Constants.DARK_MUTED_COLOR, toolbarColor);
+            bundle.putInt(Constants.MUTED_COLOR, toolbarColor);
             QuoteListFragment quoteListFragment = new QuoteListFragment();
             quoteListFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.tags_quote_list_container, quoteListFragment)
                     .commit();
         }
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_quote_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,6 +151,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         return true;
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -154,11 +159,11 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             supportFinishAfterTransition();
     }
 
+
     @Override
     public void OnItemSelected(ArrayList<String> quotes, String authorName, int position) {
 
         if (mTwoPane) {
-
             QuoteFragment quoteFragment = new QuoteFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constants.QUOTE_KEY, quotes.get(position));
@@ -166,14 +171,12 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.quote_fragment_container, quoteFragment)
                     .commit();
-
         } else {
-
             Intent intent = new Intent(this, QuoteViewActivity.class);
             intent.putStringArrayListExtra(Constants.QUOTES_KEY, quotes);
             intent.putExtra(Constants.QUOTE_NUMBER_KEY, position);
             startActivity(intent);
-
         }
     }
+
 }

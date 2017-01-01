@@ -63,7 +63,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         String tagName = tagsList.get(position).substring(0,1).toUpperCase() + tagsList.get(position).substring(1);
         holder.TV_TagName.setText(tagName); //TODO: remove this and add images
-
         Glide.with(context)
                 .load(ImageUrl.getTagImage(tagsList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -72,7 +71,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         return false;
                     }
-
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model,
                                                    Target<GlideDrawable> target,

@@ -48,8 +48,8 @@ public class QuoteListFragment extends Fragment {
 
         quotes = getArguments().getStringArrayList(Constants.QUOTES_KEY);
         authorName = getArguments().getString(Constants.AUTHOR_NAME_KEY);
-        int color = getArguments().getInt(Constants.DARK_MUTED_COLOR);
-        
+        int color = getArguments().getInt(Constants.MUTED_COLOR);
+
         QuoteAdapter quoteAdapter = new QuoteAdapter(getContext(), quotes, authorName);
         recyclerView.setAdapter(quoteAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
