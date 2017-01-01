@@ -24,5 +24,29 @@
             android:minLines="2"
             android:textSize="@dimen/quote_text_size"
             android:typeface="monospace" />
+
+        <com.like.LikeButton
+            android:id="@+id/quote_bookmark_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            app:anim_scale_factor="2"
+            app:circle_end_color="@color/red"
+            app:circle_start_color="@color/red"
+            app:dots_primary_color="@color/colorAccent"
+            app:dots_secondary_color="@color/colorPrimary"
+            app:icon_size="25dp"
+            app:icon_type="star"
+            app:like_drawable="@drawable/ic_bookmarked"
+            app:unlike_drawable="@drawable/ic_unbookmarked" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:id="@+id/share_action"
+            android:src="@drawable/ic_share"
+            android:layout_gravity="bottom|end"/>
+
     </FrameLayout>
 </android.support.v7.widget.CardView>

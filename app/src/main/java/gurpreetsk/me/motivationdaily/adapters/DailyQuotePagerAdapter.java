@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
+import gurpreetsk.me.motivationdaily.fragments.DailyQuoteFragment;
 import gurpreetsk.me.motivationdaily.fragments.QuoteFragment;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
@@ -27,7 +28,7 @@ public class DailyQuotePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        QuoteFragment quoteFragment = new QuoteFragment();
+        DailyQuoteFragment quoteFragment = new DailyQuoteFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.QUOTE_KEY, dailyQuotes.get(position));
         quoteFragment.setArguments(bundle);
