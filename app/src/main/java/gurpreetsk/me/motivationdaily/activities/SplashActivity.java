@@ -96,7 +96,6 @@ public class SplashActivity extends AppCompatActivity {
 //                    Log.i(TAG, "onTagsDataChange: " + child.getKey());
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onTagsCancelled: ", databaseError.toException());

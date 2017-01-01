@@ -1,6 +1,7 @@
 package gurpreetsk.me.motivationdaily.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -54,7 +56,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         }
 
         mTwoPane = findViewById(R.id.two_pane_view) != null;
-        String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
+        final String authorName = getIntent().getStringExtra(Constants.AUTHOR_NAME_KEY);
         String tag = getIntent().getStringExtra(Constants.TAG_CATEGORY);
 
 
@@ -71,6 +73,16 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
             }
+            collapsingToolbarLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://en.wikipedia.org/wiki/"+authorName));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                    return true;
+                }
+            });
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             collapsingToolbarLayout.setBackgroundColor(toolbarColor);
             collapsingToolbarLayout.setContentScrimColor(toolbarColor);
@@ -94,6 +106,16 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
             }
+            toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://en.wikipedia.org/wiki/"+authorName));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                    return true;
+                }
+            });
             toolbar.setTitle(authorName);
             toolbar.setBackgroundColor(toolbarColor);
         }

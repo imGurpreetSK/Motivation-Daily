@@ -19,5 +19,6 @@ public class Constants {
     public static final String TAGS_QUOTES = "TagsQuotes";
     public static final String SENDER_KEY = "SenderName";
     public static final String TAG_CATEGORY = "Category of tag";
+    public static final String WEBVIEW = "Webview";
 
 }

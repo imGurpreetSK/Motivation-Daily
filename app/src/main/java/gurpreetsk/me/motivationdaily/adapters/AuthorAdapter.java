@@ -3,6 +3,7 @@ package gurpreetsk.me.motivationdaily.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.graphics.Palette;
@@ -95,6 +96,16 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 getQuotesFromFirebase(authorList.get(holder.getAdapterPosition()), holder);
+            }
+        });
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://en.wikipedia.org/wiki/"+authorList.get(holder.getAdapterPosition())));
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                context.startActivity(intent);
+                return true;
             }
         });
 
