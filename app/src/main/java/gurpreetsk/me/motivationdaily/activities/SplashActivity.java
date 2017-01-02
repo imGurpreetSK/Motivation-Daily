@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewParent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +29,8 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
+import gurpreetsk.me.motivationdaily.adapters.DailyQuotePagerAdapter;
+import gurpreetsk.me.motivationdaily.adapters.SplashScreenPagerAdapter;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 import gurpreetsk.me.motivationdaily.utils.NetworkCheck;
 
@@ -34,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
     DatabaseReference DailyQuotesDatabaseReference;
     DatabaseReference AuthorDatabaseReference;
     DatabaseReference TagsDatabaseReference;
+    PagerAdapter pagerAdapter;
 
     ArrayList<String> authorNameList = new ArrayList<>();
     ArrayList<String> dailyQuotesList = new ArrayList<>();
@@ -41,12 +49,22 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG = "SplashActivity";
 
+//    @BindView(R.id.splash_pager)
+//    ViewPager pager;
+//    @BindView(R.id.tabDots)
+//    TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+
+//        pagerAdapter = new SplashScreenPagerAdapter(getSupportFragmentManager());
+//        pager.setAdapter(pagerAdapter);
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+//        tabLayout.setupWithViewPager(pager, true);
 
         Log.i(TAG, "onCreate: Started at " + DateFormat.getTimeInstance().format(new Date()));
 
@@ -93,6 +111,7 @@ public class SplashActivity extends AppCompatActivity {
 //                    Log.i(TAG, "onTagsDataChange: " + child.getKey());
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onTagsCancelled: ", databaseError.toException());

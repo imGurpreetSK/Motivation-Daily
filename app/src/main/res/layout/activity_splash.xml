@@ -11,26 +11,50 @@
     android:background="@color/lightPrimary"
     tools:context="gurpreetsk.me.motivationdaily.activities.SplashActivity">
 
-    <ImageView
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:src="@drawable/web_hi_res_512"
-        android:id="@+id/imageView"
-        android:contentDescription="@string/icon_description"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textStyle="bold"
         android:textSize="18dp"
+        android:layout_marginTop="15dp"
         android:textColor="@color/primaryText"
         android:id="@+id/textView"
-        android:fontFamily="sans-serif-smallcaps"
-        android:layout_marginTop="15dp"
         android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/web_hi_res_512"
+        android:id="@+id/imageView"
+        android:contentDescription="@string/icon_description"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="37dp">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin_medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:text="Please wait while data is loaded.\nThis only happens the first time while loading the app."/>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -1,12 +1,15 @@
 package gurpreetsk.me.motivationdaily.adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -28,11 +31,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MyVi
 
     private ArrayList<String> favorites;
     private Context context;
+    private Cursor cursor;
+
+    private static final String TAG = "FavoritesAdapter";
 
 
-    public FavoritesAdapter(Context context, ArrayList<String> favorites) {
+    public FavoritesAdapter(Context context, ArrayList<String> favorites, Cursor cursor) {
         this.favorites = favorites;
         this.context = context;
+        this.cursor = cursor;
     }
 
 
@@ -46,11 +53,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MyVi
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        holder.TV_quote.setText(favorites.get(position));
+        String quote = favorites.get(position);
+        quote = quote.replace("{Quote=", "").replace(".,", ".").replace("Author=", "\n-").replace("}", "");
+        holder.TV_quote.setText(quote);
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FavoritesListFragment.FavoritesCallback)context).OnFavoriteItemSelected(favorites, holder.getAdapterPosition());
+                ((FavoritesListFragment.FavoritesCallback) context).OnFavoriteItemSelected(favorites, holder.getAdapterPosition());
             }
         });
         holder.Bookmark_quote.setLiked(true);
@@ -61,18 +70,31 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MyVi
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                context.getContentResolver().delete(QuotesTable.CONTENT_URI, TableStructure.COLUMN_QUOTE + " = ?", new String[]{favorites.get(holder.getAdapterPosition())});
+//                Toast.makeText(context, cursor.getString(cursor.getColumnIndex(QuotesTable.FIELD_QUOTE)), Toast.LENGTH_SHORT).show();
+                context.getContentResolver().delete(QuotesTable.CONTENT_URI,
+                        TableStructure.COLUMN_QUOTE + " = ?",
+                        new String[]{favorites.get(holder.getAdapterPosition())});  // TODO: set this
                 likeButton.setLiked(false);
-//                notifyDataSetChanged();
-//                Toast.makeText(context, "Inserted quote: " + favorites.get(holder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
+    public Cursor swapCursor(Cursor cursor) {
+        if (this.cursor == cursor) {
+            return null;
+        }
+        Cursor newCursor = this.cursor;
+        this.cursor = cursor;
+        if (cursor != null)
+            this.notifyDataSetChanged();
+        return newCursor;
+    }
+
+
     @Override
     public int getItemCount() {
-        return favorites.size();
+        return (cursor == null) ? 0 : cursor.getCount();
     }
 
 
