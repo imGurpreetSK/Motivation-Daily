@@ -33,7 +33,7 @@ public class QuoteWidget extends AppWidgetProvider {
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             quote = intent.getStringExtra(Constants.QUOTE_KEY);
 
-            Intent launchActivty = new Intent(context, SplashActivity.class);
+            Intent launchActivty = new Intent(context, FavoritesActivity.class);
             launchActivty.putExtra(Constants.QUOTE_KEY, quote);
             launchActivty.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(launchActivty);
@@ -77,7 +77,7 @@ public class QuoteWidget extends AppWidgetProvider {
             toastIntent.setAction(QuoteWidget.TOAST_ACTION);
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent,
+            PendingIntent toastPendingIntent = PendingIntent.getActivity(context, 0, toastIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
 

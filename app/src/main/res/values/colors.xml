@@ -10,4 +10,5 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorBackground">@color/lightPrimary</color>
     <color name="red">#EF5350</color>
+    <color name="widget">#448AFF</color>
 </resources>

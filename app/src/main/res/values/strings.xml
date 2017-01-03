@@ -22,4 +22,5 @@
     <string name="icon_description">Discription of app icon</string>
     <string name="widget_image">Widget Image</string>
     <string name="internet_needed">No network connection</string>
+    <string name="no_favorites_found_widget">No favorites added</string>
 </resources>

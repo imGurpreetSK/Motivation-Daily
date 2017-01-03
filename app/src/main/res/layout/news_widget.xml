@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@android:color/transparent"
     android:layout_height="match_parent"
     android:layout_margin="8dp" >
 
@@ -8,7 +9,7 @@
         android:id="@+id/stack_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryText"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:loopViews="true" />
 
@@ -17,9 +18,8 @@
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryText"
         android:gravity="center"
-        android:text="Empty Message"
+        android:text="@string/no_favorites_found_widget"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold" />
