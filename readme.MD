@@ -13,6 +13,10 @@ Uses firebase as a back-end for working, and all the present data is available f
 * analytics
 * notifications
 
+## .apk
+
+[Download file](https://github.com/GurpreetSK95/Motivation-Daily/blob/master/app/Motivation%20Daily.apk)
+
 ## Demo Video
 
 Link: https://www.youtube.com/watch?v=5SwEtcQZnT0
