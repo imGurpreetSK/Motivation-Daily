@@ -6,8 +6,7 @@
     <string name="grid_imageview_desc">Image of the quote author</string>
     <string name="no_network">No Network available</string>
     <string name="isFirstRun">FirstRun</string>
-    <string name="firstRunInternetNeeded">Internet connection needed for the app to run for the first time</string>
-    <string name="PREF_FILE">MY PREFERENCES</string>
+    <string name="firstRunInternetNeeded">Network connection is needed for app to fetch data\nThis happens only the first time</string>
     <string name="bookmark_image_button">Image button to bookmark quote</string>
     <string name="ic_settings">Settings</string>
     <string name="authorimage_transition">Author Image Transition</string>
@@ -21,4 +20,6 @@
     <string name="all_authors">All Authors</string>
     <string name="all_tags">Categories</string>
     <string name="icon_description">Discription of app icon</string>
+    <string name="widget_image">Widget Image</string>
+    <string name="internet_needed">No network connection</string>
 </resources>

@@ -87,11 +87,8 @@ public class QuoteService extends RemoteViewsService {
             // position will always range from 0 to getCount() - 1.
 
             // We construct a remote views item based on our widget item xml file,
-            // and set the
-            // text based on the position.
-            RemoteViews rv = new RemoteViews(mContext.getPackageName(),
-                    R.layout.widget_stack);
-
+            // and set the text based on the position.
+            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_stack);
             rv.setTextViewText(R.id.widget_text, quotes.get(position));
 
             // Next, we set a fill-intent which will be used to fill-in the pending

@@ -6,8 +6,9 @@
         android:id="@+id/widget_item"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#9000"
-        android:gravity="center" />
+        android:background="@color/primaryText"
+        android:gravity="center"
+        android:contentDescription="@string/widget_image" />
 
     <TextView
         android:layout_width="match_parent"

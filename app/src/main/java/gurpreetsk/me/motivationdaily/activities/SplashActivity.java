@@ -1,5 +1,6 @@
 package gurpreetsk.me.motivationdaily.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,13 +8,16 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,10 +53,15 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG = "SplashActivity";
 
+    SharedPreferences preferences = null;
+    public static final String FirstRun = "FirstRun";
+
 //    @BindView(R.id.splash_pager)
 //    ViewPager pager;
 //    @BindView(R.id.tabDots)
 //    TabLayout tabLayout;
+    @BindView(R.id.data_loading_textview)
+    TextView TV_data_loading;
 
 
     @Override
@@ -61,55 +70,85 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
+        preferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+
 //        pagerAdapter = new SplashScreenPagerAdapter(getSupportFragmentManager());
 //        pager.setAdapter(pagerAdapter);
 //        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
 //        tabLayout.setupWithViewPager(pager, true);
 
-        Log.i(TAG, "onCreate: Started at " + DateFormat.getTimeInstance().format(new Date()));
-
-        // set first run shared
-//        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putBoolean(getString(R.string.isFirstRun), true);
-//        editor.commit();
-
-        database = FirebaseDatabase.getInstance();
-        try {
-            database.setPersistenceEnabled(true);   //TODO: Crash here
-        } catch (Exception e) {
-            FirebaseCrash.report(e);
+        if (preferences.getBoolean(FirstRun, true)) {
+            if (NetworkCheck.isNetworkConnected(this)) {
+                Log.i(TAG, "onCreate: Started at " + DateFormat.getTimeInstance().format(new Date()));
+                TV_data_loading.setVisibility(View.VISIBLE);
+                database = FirebaseDatabase.getInstance();
+                try {
+                    database.setPersistenceEnabled(true);   //TODO: Crash here
+                } catch (Exception e) {
+                    FirebaseCrash.report(e);
+                }
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                AuthorDatabaseReference = databaseReference.child("authors");
+                AuthorDatabaseReference.keepSynced(true);
+                DailyQuotesDatabaseReference = databaseReference.child("daily_quotes");
+                DailyQuotesDatabaseReference.keepSynced(true);
+                TagsDatabaseReference = databaseReference.child("tags");
+                TagsDatabaseReference.keepSynced(true);
+                getDailyQuotes();
+                getTagsFromFirebase();
+                getAuthorsFromFirebase();
+                preferences.edit().putBoolean(FirstRun, false).apply();
+            } else {
+                TV_data_loading.setVisibility(View.GONE);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.internet_needed))
+                        .setMessage(getString(R.string.firstRunInternetNeeded))
+                        .setNeutralButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                preferences.edit().putBoolean(FirstRun, false).apply();
+                                dialog.dismiss();
+                                onPause();
+                            }
+                        })
+                        .setIcon(android.R.drawable.stat_notify_error);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        } else {
+            Log.i(TAG, "onCreate: Started at " + DateFormat.getTimeInstance().format(new Date()));
+            TV_data_loading.setVisibility(View.GONE);
+            database = FirebaseDatabase.getInstance();
+            try {
+                database.setPersistenceEnabled(true);   //TODO: Crash here
+            } catch (Exception e) {
+                FirebaseCrash.report(e);
+            }
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            AuthorDatabaseReference = databaseReference.child("authors");
+            AuthorDatabaseReference.keepSynced(true);
+            DailyQuotesDatabaseReference = databaseReference.child("daily_quotes");
+            DailyQuotesDatabaseReference.keepSynced(true);
+            TagsDatabaseReference = databaseReference.child("tags");
+            TagsDatabaseReference.keepSynced(true);
+            getDailyQuotes();
+            getTagsFromFirebase();
+            getAuthorsFromFirebase();
         }
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        AuthorDatabaseReference = databaseReference.child("authors");
-//        AuthorDatabaseReference.startAt("Abraham Lincoln");
-//        AuthorDatabaseReference.endAt("Benjamin Franklin");
-        AuthorDatabaseReference.keepSynced(true);
-        DailyQuotesDatabaseReference = databaseReference.child("daily_quotes");
-        DailyQuotesDatabaseReference.keepSynced(true);
-        TagsDatabaseReference = databaseReference.child("tags");
-        TagsDatabaseReference.keepSynced(true);
-
-        //TODO: CHECK FOR INTERNET CONNECTIVITY ON FIRST RUN
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getDailyQuotes();
-        getTagsFromFirebase();
-        getAuthorsFromFirebase();
     }
 
     private void getTagsFromFirebase() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                for (DataSnapshot child : dataSnapshot.getChildren())
                     tagsNameList.add(child.getKey());
-//                    Log.i(TAG, "onTagsDataChange: " + child.getKey());
-                }
             }
 
             @Override

@@ -46,12 +46,13 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_margin_medium"/>
+            android:layout_marginBottom="12dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:id="@+id/data_loading_textview"
             android:gravity="center"
             android:textSize="14dp"
             android:text="Please wait while data is loaded.\nThis only happens the first time while loading the app."/>
