@@ -45,7 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.GridActivity" />
         </activity>
-        w
+
         <activity
             android:name=".activities.AuthorsActivity"
             android:parentActivityName=".activities.GridActivity">
@@ -64,28 +64,26 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
-        <!--
-             Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more.
-        -->
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
 
         <receiver android:name=".widget.QuoteWidget">
-                        <intent-filter>
-                            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                        </intent-filter>
-            
-                        <meta-data
-                            android:name="android.appwidget.provider"
-                            android:resource="@xml/quote_widget_info" />
-                    </receiver>
-        
-                <service android:name=".widget.QuoteService"
-                    android:permission="android.permission.BIND_REMOTEVIEWS"
-                    android:exported="false" />
-        
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/quote_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.QuoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -65,6 +67,7 @@ public class FavoritesListFragment extends Fragment implements LoaderManager.Loa
             favoritesAdapter.swapCursor(data);
         } catch (Exception e) {
             e.printStackTrace();
+            FirebaseCrash.log(e.toString());
         }
     }
 
@@ -75,6 +78,7 @@ public class FavoritesListFragment extends Fragment implements LoaderManager.Loa
             favoritesAdapter.swapCursor(null);
         } catch (Exception e) {
             e.printStackTrace();
+            FirebaseCrash.log(e.toString());
         }
     }
 

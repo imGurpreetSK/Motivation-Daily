@@ -11,7 +11,6 @@ import android.widget.RemoteViews;
 
 import gurpreetsk.me.motivationdaily.R;
 import gurpreetsk.me.motivationdaily.activities.FavoritesActivity;
-import gurpreetsk.me.motivationdaily.activities.SplashActivity;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 
 /**
@@ -52,28 +51,15 @@ public class QuoteWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
 
-            // Here we setup the intent which points to the StackViewService which will
-            // provide the views for this collection.
             Intent intent = new Intent(context, QuoteService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            // When intents are compared, the extras are ignored, so we need to embed the extras
-            // into the data so that the extras will not be ignored.
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.news_widget);
             rv.setRemoteAdapter(appWidgetId, R.id.stack_view, intent);
 
-            // The empty view is displayed when the collection has no items. It should be a sibling
-            // of the collection view.
             rv.setEmptyView(R.id.stack_view, R.id.empty_view);
 
-            // Here we setup the a pending intent template. Individuals items of a collection
-            // cannot setup their own pending intents, instead, the collection as a whole can
-            // setup a pending intent template, and the individual items can set a fillInIntent
-            // to create unique before on an item to item basis.
             Intent toastIntent = new Intent(context, QuoteWidget.class);
-            // Set the action for the intent.
-            // When the user touches a particular view, it will have the effect of
-            // broadcasting TOAST_ACTION.
             toastIntent.setAction(QuoteWidget.TOAST_ACTION);
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
