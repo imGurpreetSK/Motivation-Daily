@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -47,7 +49,8 @@ public class GridActivity extends AppCompatActivity {
 
 
     private static final String TAG = "GridActivity";
-    //    String[] data ;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     ArrayList<String> authorsList;
     ArrayList<String> tagsList;
     ArrayList<String> dailyQuotesList;
@@ -59,6 +62,9 @@ public class GridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grid);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
         authorsList = getIntent().getStringArrayListExtra(Constants.AUTHORS_KEY);
         dailyQuotesList = getIntent().getStringArrayListExtra(Constants.DAILY_QUOTES);

@@ -30,7 +30,8 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)     //TODO: update icon
+                        .setAutoCancel(true)
+                        .setSmallIcon(R.drawable.ic_star)
                         .setContentTitle(remoteMessage.getNotification().getTitle())
                         .setContentText(remoteMessage.getNotification().getBody());
 
