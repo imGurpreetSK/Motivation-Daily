@@ -72,6 +72,20 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
+        <receiver android:name=".widget.QuoteWidget">
+                        <intent-filter>
+                            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                        </intent-filter>
+            
+                        <meta-data
+                            android:name="android.appwidget.provider"
+                            android:resource="@xml/quote_widget_info" />
+                    </receiver>
+        
+                <service android:name=".widget.QuoteService"
+                    android:permission="android.permission.BIND_REMOTEVIEWS"
+                    android:exported="false" />
+        
     </application>
 
 </manifest>
