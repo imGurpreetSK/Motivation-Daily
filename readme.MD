@@ -20,23 +20,23 @@ Link: https://www.youtube.com/watch?v=5SwEtcQZnT0
 ## Screenshots
 
 <p align="center">
-  <img src="/blob/master/Screenshots/Splash.png" width="350"/>
-  <img src="/blob/master/Screenshots/Main.png" width="350"/>
+  <img src="/Screenshots/Splash.png" width="350"/>
+  <img src="/Screenshots/Main.png" width="350"/>
 </p>
 
 <p align="center">
-  <img src="/blob/master/Screenshots/AllAuthors.png" width="350"/>
-  <img src="/blob/master/Screenshots/AllTags.png" width="350"/>
+  <img src="/Screenshots/AllAuthors.png" width="350"/>
+  <img src="/Screenshots/AllTags.png" width="350"/>
 </p>
 
 <p align="center">
-  <img src="/blob/master/Screenshots/AuthorQuotesList.png" width="350"/>
-  <img src="/blob/master/Screenshots/Favorites.png" width="350"/>
+  <img src="/Screenshots/AuthorQuotesList.png" width="350"/>
+  <img src="/Screenshots/Favorites.png" width="350"/>
 </p>
 
 <p align="center">
-  <img src="/blob/master/Screenshots/Notification.png" width="350"/>
-  <img src="/blob/master/Screenshots/QuoteExample.png" width="350"/>
+  <img src="/Screenshots/Notification.png" width="350"/>
+  <img src="/Screenshots/QuoteExample.png" width="350"/>
 </p>
 
 ## More
