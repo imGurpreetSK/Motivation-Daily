@@ -122,10 +122,6 @@ public class GridActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.tags_main_grid_fragment_container, tagsFragment).commit();
 
-
-//        dailyQuoteViewPager.setPageTransformer(true, new DepthPageTransformer());
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.main_grid_fragment_container2, gridFragment).commit();
     }
 
 
