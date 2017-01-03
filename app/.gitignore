@@ -44,7 +44,7 @@ crashlytics-build.properties
 fabric.properties
 ### Android template
 # Built application files
-*.apk
+# *.apk
 *.ap_
 
 # Files for the ART/Dalvik VM
@@ -81,11 +81,11 @@ captures/
 *.iml
 
 # Keystore files
-*.jks
+# *.jks
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
-google-services.json
+# google-services.json
 
 
