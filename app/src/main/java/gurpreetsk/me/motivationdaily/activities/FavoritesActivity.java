@@ -2,9 +2,12 @@ package gurpreetsk.me.motivationdaily.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesLis
 
         mTwoPane = findViewById(R.id.favorites_two_pane_view) != null;
 
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.favorites));
 
         FavoritesListFragment favoritesListFragment = new FavoritesListFragment();
@@ -45,6 +48,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesLis
                 .commit();
 
     }
+
 
 
     private Bundle getAllFavorites() {
@@ -83,4 +87,12 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesLis
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return true;
+    }
 }

@@ -2,11 +2,13 @@ package gurpreetsk.me.motivationdaily.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +44,9 @@ public class AuthorsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authors);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getString(R.string.all_authors));
 
         authorNameList = getIntent().getStringArrayListExtra(Constants.AUTHORS_KEY);
@@ -67,6 +72,7 @@ public class AuthorsActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -77,6 +83,8 @@ public class AuthorsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
             case R.id.ic_favorites:
                 startActivity(new Intent(this, FavoritesActivity.class));
                 break;

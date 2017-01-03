@@ -52,10 +52,12 @@ public class FavoritesListFragment extends Fragment implements LoaderManager.Loa
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getContext(), QuotesTable.CONTENT_URI, projections, null, null, null);
+        return new CursorLoader(getContext(), QuotesTable.CONTENT_URI, null, null, null, null);
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -65,6 +67,7 @@ public class FavoritesListFragment extends Fragment implements LoaderManager.Loa
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {

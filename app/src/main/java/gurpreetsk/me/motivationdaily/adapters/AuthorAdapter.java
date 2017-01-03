@@ -127,8 +127,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
                 sendAuthorsList.putExtra(Constants.SENDER_KEY, "Author");
                 sendAuthorsList.putStringArrayListExtra(Constants.QUOTES_KEY, authorQuotes);
                 sendAuthorsList.putExtra(Constants.AUTHOR_NAME_KEY, authorName);
-                sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);
-//                sendAuthorsList.putExtra(Constants.DARK_MUTED_COLOR, darkColor);
+                sendAuthorsList.putExtra(Constants.MUTED_COLOR, color);     //TODO: color not changing for every author
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (!QuoteListActivity.mTwoPane) {
                         ActivityOptionsCompat options;

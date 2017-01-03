@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,6 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
     CollapsingToolbarLayout collapsingToolbarLayout;
     CircleImageView authorImage;
     Toolbar toolbar;
-    LinearLayout twoPaneView;
     int toolbarColor;
 
     public static boolean mTwoPane;
@@ -42,8 +42,8 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
         super.onCreate(savedInstanceState);
 
         //TODO:NPE because of this
-//        if(getSupportActionBar()!=null)
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String sender = getIntent().getStringExtra(Constants.SENDER_KEY);
 
@@ -71,13 +71,14 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             authorImage = (CircleImageView) findViewById(R.id.detail_image_view);
             collapsingToolbarLayout.setTitle(authorName);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR,
+                        getResources().getColor(R.color.colorPrimaryDark)));
             }
             collapsingToolbarLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://en.wikipedia.org/wiki/"+authorName));
+                    intent.setData(Uri.parse("https://en.wikipedia.org/wiki/" + authorName));
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                     return true;
@@ -89,28 +90,28 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             Glide.with(this)
                     .load(ImageUrl.getAuthorImage(authorName))
                     .into(authorImage);
-        }
-        else if (!mTwoPane && sender.equals("Tags")) {
+        } else if (!mTwoPane && sender.equals("Tags")) {
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setBackgroundColor(toolbarColor);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR,
+                        getResources().getColor(R.color.colorPrimaryDark)));
             }
             String Tag = tag.substring(0, 1).toUpperCase() + tag.substring(1);
             toolbar.setTitle(Tag);
-        }
-        else if (mTwoPane && sender.equals("Author")) {
+        } else if (mTwoPane && sender.equals("Author")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR,
+                        getResources().getColor(R.color.colorPrimaryDark)));
             }
             toolbar.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://en.wikipedia.org/wiki/"+authorName));
+                    intent.setData(Uri.parse("https://en.wikipedia.org/wiki/" + authorName));
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                     return true;
@@ -118,12 +119,12 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
             });
             toolbar.setTitle(authorName);
             toolbar.setBackgroundColor(toolbarColor);
-        }
-        else if (mTwoPane && sender.equals("Tags")) {
+        } else if (mTwoPane && sender.equals("Tags")) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbarColor = getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimary));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR, getResources().getColor(R.color.colorPrimaryDark)));
+                window.setStatusBarColor(getIntent().getIntExtra(Constants.MUTED_COLOR,
+                        getResources().getColor(R.color.colorPrimaryDark)));
             }
             String Tag = tag.substring(0, 1).toUpperCase() + tag.substring(1);
             toolbar.setTitle(Tag);
@@ -163,6 +164,8 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
             case R.id.share_action_quote:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -174,12 +177,12 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
     }
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (!mTwoPane)
-            supportFinishAfterTransition();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        if (!mTwoPane)
+//            supportFinishAfterTransition();
+//    }
 
 
     @Override

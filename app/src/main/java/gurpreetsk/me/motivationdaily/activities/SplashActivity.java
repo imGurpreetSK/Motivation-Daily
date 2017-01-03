@@ -4,20 +4,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewParent;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,14 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gurpreetsk.me.motivationdaily.R;
-import gurpreetsk.me.motivationdaily.adapters.DailyQuotePagerAdapter;
-import gurpreetsk.me.motivationdaily.adapters.SplashScreenPagerAdapter;
 import gurpreetsk.me.motivationdaily.utils.Constants;
 import gurpreetsk.me.motivationdaily.utils.NetworkCheck;
 
@@ -56,10 +46,6 @@ public class SplashActivity extends AppCompatActivity {
     SharedPreferences preferences = null;
     public static final String FirstRun = "FirstRun";
 
-//    @BindView(R.id.splash_pager)
-//    ViewPager pager;
-//    @BindView(R.id.tabDots)
-//    TabLayout tabLayout;
     @BindView(R.id.data_loading_textview)
     TextView TV_data_loading;
 
@@ -71,11 +57,6 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         preferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
-
-//        pagerAdapter = new SplashScreenPagerAdapter(getSupportFragmentManager());
-//        pager.setAdapter(pagerAdapter);
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
-//        tabLayout.setupWithViewPager(pager, true);
 
         if (preferences.getBoolean(FirstRun, true)) {
             if (NetworkCheck.isNetworkConnected(this)) {
@@ -99,14 +80,15 @@ public class SplashActivity extends AppCompatActivity {
                 getAuthorsFromFirebase();
                 preferences.edit().putBoolean(FirstRun, false).apply();
             } else {
-                TV_data_loading.setVisibility(View.GONE);
+                if (!preferences.getBoolean(FirstRun, false))
+                    TV_data_loading.setVisibility(View.GONE);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.internet_needed))
                         .setMessage(getString(R.string.firstRunInternetNeeded))
                         .setNeutralButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                preferences.edit().putBoolean(FirstRun, false).apply();
+//                                preferences.edit().putBoolean(FirstRun, false).apply();
                                 dialog.dismiss();
                                 onPause();
                             }
@@ -117,7 +99,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         } else {
             Log.i(TAG, "onCreate: Started at " + DateFormat.getTimeInstance().format(new Date()));
-            TV_data_loading.setVisibility(View.GONE);
+            if (!preferences.getBoolean(FirstRun, false))
+                TV_data_loading.setVisibility(View.GONE);
             database = FirebaseDatabase.getInstance();
             try {
                 database.setPersistenceEnabled(true);   //TODO: Crash here
@@ -138,10 +121,12 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
     }
+
 
     private void getTagsFromFirebase() {
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -159,6 +144,7 @@ public class SplashActivity extends AppCompatActivity {
         TagsDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
+
     private void getDailyQuotes() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -175,14 +161,14 @@ public class SplashActivity extends AppCompatActivity {
         DailyQuotesDatabaseReference.addValueEventListener(valueEventListener);
     }
 
+
     void getAuthorsFromFirebase() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                for (DataSnapshot child : dataSnapshot.getChildren())
                     authorNameList.add(child.getKey());
-//                    Log.i(TAG, "onAuthorsDataChange: " + child.getKey());
-                }
+
                 Log.i(TAG, "onAuthorsDataChange: No of authors fetched " + dataSnapshot.getChildrenCount());
 
                 Intent sendLists = new Intent(SplashActivity.this, GridActivity.class);
@@ -201,10 +187,12 @@ public class SplashActivity extends AppCompatActivity {
         AuthorDatabaseReference.addListenerForSingleValueEvent(valueEventListener);
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "onPause: Ended at " + DateFormat.getTimeInstance().format(new Date()));
         finish();
     }
+
 }

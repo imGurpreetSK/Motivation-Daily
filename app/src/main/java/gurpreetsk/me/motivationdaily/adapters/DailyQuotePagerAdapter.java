@@ -28,17 +28,25 @@ public class DailyQuotePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+//        DailyQuoteFragment quoteFragment;
+//        if (position == 5) {
+//            quoteFragment = new DailyQuoteFragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putString(Constants.QUOTE_KEY, "Read more");
+//            quoteFragment.setArguments(bundle);
+//        } else {
         DailyQuoteFragment quoteFragment = new DailyQuoteFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.QUOTE_KEY, dailyQuotes.get(position));
         quoteFragment.setArguments(bundle);
+//        }
         return quoteFragment;
     }
 
 
     @Override
     public int getCount() {
-        return dailyQuotes.size();
+        return dailyQuotes.size() ;
     }
 
 

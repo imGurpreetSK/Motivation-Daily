@@ -53,6 +53,7 @@ public class QuoteViewActivity extends AppCompatActivity {
         quotePager.setCurrentItem(quoteNumber);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_quote_list, menu);
