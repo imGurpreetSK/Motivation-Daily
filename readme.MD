@@ -43,5 +43,9 @@ Link: https://www.youtube.com/watch?v=5SwEtcQZnT0
   <img src="/Screenshots/QuoteExample.png" width="350"/>
 </p>
 
+<p align="center">
+  <img src="/Screenshots/widget.png" width="350"/>
+</p>
+
 ## More
 Use as per your convinience, and create a PR if you have some suggestion/error report.
