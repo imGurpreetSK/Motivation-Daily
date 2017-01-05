@@ -57,7 +57,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.MyVi
         holder.LL_quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FavoritesListFragment.FavoritesCallback) context).OnFavoriteItemSelected(favorites, holder.getAdapterPosition());
+                ((FavoritesListFragment.FavoritesCallback) context).onFavoriteItemSelected(favorites, holder.getAdapterPosition());
             }
         });
         holder.Bookmark_quote.setLiked(true);

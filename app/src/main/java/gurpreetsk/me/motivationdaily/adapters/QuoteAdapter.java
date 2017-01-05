@@ -92,7 +92,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
             @Override
             public void onClick(View view) {
                 //Handles data transfer on different devices
-                ((QuoteListFragment.Callback) context).OnItemSelected(quotes, author, holder.getAdapterPosition());
+                ((QuoteListFragment.Callback) context).onItemSelected(quotes, author, holder.getAdapterPosition());
             }
         });
     }

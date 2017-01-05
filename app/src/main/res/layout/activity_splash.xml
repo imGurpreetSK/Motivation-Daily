@@ -55,7 +55,7 @@
             android:id="@+id/data_loading_textview"
             android:gravity="center"
             android:textSize="14dp"
-            android:text="Please wait while data is loaded.\nThis only happens the first time while loading the app."/>
+            android:text="@string/data_loading_splash"/>
     </LinearLayout>
 
 </RelativeLayout>

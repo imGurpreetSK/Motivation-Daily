@@ -23,4 +23,7 @@
     <string name="widget_image">Widget Image</string>
     <string name="internet_needed">No network connection</string>
     <string name="no_favorites_found_widget">No favorites added</string>
+    <string name="tags_title">Tags:</string>
+    <string name="authors_title">Authors:</string>
+    <string name="data_loading_splash">Please wait while data is loaded.\\nThis only happens the first time while loading the app.</string>
 </resources>

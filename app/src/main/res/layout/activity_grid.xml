@@ -64,7 +64,7 @@
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_margin_12"
                         android:gravity="start"
-                        android:text="Authors:"
+                        android:text="@string/authors_title"
                         android:textSize="@dimen/heading_text_size"
                         android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_margin_12"
                         android:gravity="start"
-                        android:text="Tags:"
+                        android:text="@string/tags_title"
                         android:textSize="@dimen/heading_text_size"
                         android:textStyle="bold" />
 

@@ -35,7 +35,7 @@ public class QuoteListFragment extends Fragment {
 
 
     public interface Callback {
-        void OnItemSelected(ArrayList<String> quotes, String authorName, int position);
+        void onItemSelected(ArrayList<String> quotes, String authorName, int position);
     }
 
 

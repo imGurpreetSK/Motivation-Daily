@@ -84,7 +84,7 @@ public class FavoritesListFragment extends Fragment implements LoaderManager.Loa
 
 
     public interface FavoritesCallback {
-        void OnFavoriteItemSelected(ArrayList<String> quotes, int position);
+        void onFavoriteItemSelected(ArrayList<String> quotes, int position);
     }
 
 

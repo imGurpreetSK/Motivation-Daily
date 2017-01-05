@@ -186,7 +186,7 @@ public class QuoteListActivity extends AppCompatActivity implements QuoteListFra
 
 
     @Override
-    public void OnItemSelected(ArrayList<String> quotes, String authorName, int position) {
+    public void onItemSelected(ArrayList<String> quotes, String authorName, int position) {
 
         if (mTwoPane) {
             QuoteFragment quoteFragment = new QuoteFragment();

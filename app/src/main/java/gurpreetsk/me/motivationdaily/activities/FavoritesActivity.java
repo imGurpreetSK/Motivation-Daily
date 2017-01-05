@@ -65,7 +65,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesLis
 
 
     @Override
-    public void OnFavoriteItemSelected(ArrayList<String> favorites, int position) {
+    public void onFavoriteItemSelected(ArrayList<String> favorites, int position) {
 
         if (mTwoPane) {
 
