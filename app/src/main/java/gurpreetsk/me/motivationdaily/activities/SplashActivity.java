@@ -3,6 +3,7 @@ package gurpreetsk.me.motivationdaily.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AlertDialog;
@@ -75,10 +76,7 @@ public class SplashActivity extends AppCompatActivity {
                 DailyQuotesDatabaseReference.keepSynced(true);
                 TagsDatabaseReference = databaseReference.child("tags");
                 TagsDatabaseReference.keepSynced(true);
-                getDailyQuotes();
-                getTagsFromFirebase();
-                getAuthorsFromFirebase();
-                preferences.edit().putBoolean(FirstRun, false).apply();
+                new FetchAsyncTask().execute();
             } else {
                 if (!preferences.getBoolean(FirstRun, false))
                     TV_data_loading.setVisibility(View.GONE);
@@ -194,5 +192,25 @@ public class SplashActivity extends AppCompatActivity {
         Log.i(TAG, "onPause: Ended at " + DateFormat.getTimeInstance().format(new Date()));
         finish();
     }
+
+
+    private class FetchAsyncTask extends AsyncTask <Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            getDailyQuotes();
+            getTagsFromFirebase();
+            getAuthorsFromFirebase();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            preferences.edit().putBoolean(FirstRun, false).apply();
+        }
+
+    }
+
 
 }
